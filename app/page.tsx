@@ -1,11 +1,14 @@
 'use client';
-import { useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 export default function Home() {
-  useEffect(() => {
-    let canvas: HTMLCanvasElement = document.querySelector('#canvas')!;
-    let context: CanvasRenderingContext2D = canvas.getContext('2d')!;
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    let context: CanvasRenderingContext2D = canvas.getContext('2d')!;
     let width, height, scale;
 
     scale = window.devicePixelRatio;
@@ -31,7 +34,7 @@ export default function Home() {
 
   return (
     <div>
-      <canvas id="canvas"></canvas>
+      <canvas ref={canvasRef}></canvas>
     </div>
   );
 }
