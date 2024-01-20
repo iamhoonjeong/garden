@@ -46,8 +46,14 @@ export default function Home() {
     animate();
   }, []);
 
+  console.log(process.env.NEXT_PUBLIC_CONSTRUCTION);
   return (
-    <div>
+    <div className="container">
+      {process.env.NEXT_PUBLIC_CONSTRUCTION === 'true' && (
+        <div className="construction">
+          <div>UNDER CONSTRUCTION</div>
+        </div>
+      )}
       <canvas ref={canvasRef}></canvas>
     </div>
   );

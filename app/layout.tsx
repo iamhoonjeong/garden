@@ -1,10 +1,17 @@
 import type { Metadata } from 'next';
+import { Lora } from 'next/font/google';
 import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Garden',
   description: `hoon's garden`,
 };
+
+const lora = Lora({
+  weight: '700',
+  subsets: ['latin'],
+  style: 'italic',
+});
 
 export default function RootLayout({
   children,
@@ -13,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={lora.className}>{children}</body>
     </html>
   );
 }
