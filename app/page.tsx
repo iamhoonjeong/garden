@@ -1,10 +1,19 @@
 'use client';
 import { useRef, useEffect } from 'react';
+import { drawCircles } from './lib/draw';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  let circles: { pos: number; vel: number }[] = [];
 
-  useEffect(() => {
+  for (let i = 0; i < 12; i++) {
+    circles.push({
+      pos: 50 * i + 51,
+      vel: 1,
+    });
+  }
+
+  const animate = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -23,13 +32,21 @@ export default function Home() {
 
     context.scale(scale, scale);
 
-    context.save();
-    context.translate(width * 0.5, height * 0.5);
-    context.fillStyle = 'black';
-    context.beginPath();
-    context.arc(0, 0, 100, 0, Math.PI * 2);
-    context.fill();
-    context.restore();
+    drawCircles(canvas, context, width, height, circles);
+
+    const animateId = requestAnimationFrame(animate);
+    if (false) {
+      cancelAnimationFrame(animateId);
+    }
+  };
+
+  useEffect(() => {
+    if (!window) return;
+
+    window.addEventListener('load', animate);
+    return () => {
+      window.removeEventListener('load', animate);
+    };
   }, []);
 
   return (
