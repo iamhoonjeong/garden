@@ -40,42 +40,10 @@ export default function Home() {
     }
   };
 
-  const onClick = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    let context: CanvasRenderingContext2D = canvas.getContext('2d')!;
-    let width, height, scale;
-
-    scale = window.devicePixelRatio;
-    width = window.innerWidth;
-    height = window.innerHeight;
-
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
-
-    canvas.width = window.innerWidth * scale;
-    canvas.height = window.innerHeight * scale;
-
-    context.scale(scale, scale);
-
-    drawCircles(canvas, context, width, height, circles);
-
-    const animateId = requestAnimationFrame(animate);
-    if (false) {
-      cancelAnimationFrame(animateId);
-    }
-  };
-
   useEffect(() => {
     if (!window) return;
 
-    window.addEventListener('click', onClick);
-    window.addEventListener('load', animate);
-    return () => {
-      window.removeEventListener('click', onClick);
-      window.removeEventListener('load', animate);
-    };
+    animate();
   }, []);
 
   return (
