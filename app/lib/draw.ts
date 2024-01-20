@@ -8,8 +8,9 @@ export const drawCircles = (
     vel: number;
   }[],
 ) => {
+  let cw = width * 0.03;
   for (let i = 0; i < circles.length; i++) {
-    if (circles[i].pos >= width - 50 || circles[i].pos <= 0 + 50) {
+    if (circles[i].pos >= width || circles[i].pos <= 0) {
       circles[i].vel *= -1;
     }
 
@@ -17,7 +18,7 @@ export const drawCircles = (
     context.translate(0, height * 0.5);
     context.fillStyle = 'black';
     context.beginPath();
-    context.arc(circles[i].pos, 0, 50, 0, Math.PI * 2);
+    context.arc(circles[i].pos, 0, cw, 0, Math.PI * 2);
     context.fill();
     context.restore();
 
