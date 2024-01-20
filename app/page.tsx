@@ -44,9 +44,20 @@ export default function Home() {
     if (!window) return;
 
     animate();
+
+    window.addEventListener('click', addCircle);
+    return () => {
+      window.removeEventListener('click', addCircle);
+    };
   }, []);
 
-  console.log(process.env.NEXT_PUBLIC_CONSTRUCTION);
+  const addCircle = (e: MouseEvent) => {
+    circles.push({
+      pos: e.offsetX,
+      vel: 1,
+    });
+  };
+
   return (
     <div className="container">
       {process.env.NEXT_PUBLIC_CONSTRUCTION === 'true' && (
