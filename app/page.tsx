@@ -1,6 +1,6 @@
 'use client';
 import { useRef, useEffect } from 'react';
-import { drawCircles } from './lib/draw';
+import { initCanvas, drawCircles, addCircle } from './lib/draw';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -13,50 +13,32 @@ export default function Home() {
     });
   }
 
-  const animate = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+  const animate = (
+    canvas: HTMLCanvasElement,
+    context: CanvasRenderingContext2D,
+  ) => {
+    drawCircles(canvas, context, circles);
 
-    let context: CanvasRenderingContext2D = canvas.getContext('2d')!;
-    let width, height, scale;
-
-    scale = window.devicePixelRatio;
-    width = window.innerWidth;
-    height = window.innerHeight;
-
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
-
-    canvas.width = window.innerWidth * scale;
-    canvas.height = window.innerHeight * scale;
-
-    context.scale(scale, scale);
-
-    drawCircles(canvas, context, width, height, circles);
-
-    const animateId = requestAnimationFrame(animate);
+    const animateId = requestAnimationFrame(() => animate(canvas, context));
     if (false) {
       cancelAnimationFrame(animateId);
     }
   };
 
   useEffect(() => {
-    if (!window) return;
+    if (!canvasRef.current) return;
 
-    animate();
+    const canvas = canvasRef.current;
+    const context: CanvasRenderingContext2D = canvas.getContext('2d')!;
 
-    window.addEventListener('click', addCircle);
+    initCanvas(canvas, context);
+    animate(canvas, context);
+
+    window.addEventListener('click', (e) => addCircle(e, circles));
     return () => {
-      window.removeEventListener('click', addCircle);
+      window.removeEventListener('click', (e) => addCircle(e, circles));
     };
   }, []);
-
-  const addCircle = (e: MouseEvent) => {
-    circles.push({
-      pos: e.offsetX,
-      vel: 1,
-    });
-  };
 
   return (
     <div className="container">
