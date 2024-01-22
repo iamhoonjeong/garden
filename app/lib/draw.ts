@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const initCanvas = (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
@@ -21,7 +23,10 @@ export const drawCircles = (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   circles: {
-    pos: number;
+    pos: {
+      x: number;
+      y: number;
+    };
     vel: number;
   }[],
 ) => {
@@ -32,28 +37,22 @@ export const drawCircles = (
   context.clearRect(0, 0, width, height);
 
   for (let i = 0; i < circles.length; i++) {
-    if (circles[i].pos >= width || circles[i].pos <= 0) {
-      circles[i].vel *= -1;
-    }
-
     context.save();
-    context.translate(0, height * 0.5);
+    context.translate(0, 0);
     context.fillStyle = 'black';
     context.beginPath();
-    context.arc(circles[i].pos, 0, cw, 0, Math.PI * 2);
+    context.arc(circles[i].pos.x, circles[i].pos.y, cw, 0, Math.PI * 2);
     context.fill();
     context.restore();
-
-    circles[i].pos = circles[i].pos + circles[i].vel;
   }
 };
 
-export const addCircle = (
-  e: MouseEvent,
-  circles: { pos: number; vel: number }[],
-) => {
-  circles.push({
-    pos: e.offsetX,
+export const addCircle = async (e: MouseEvent) => {
+  await axios.post('/api/circle', {
+    pos: {
+      x: e.offsetX,
+      y: e.offsetY,
+    },
     vel: 1,
   });
 };
