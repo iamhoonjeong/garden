@@ -1,35 +1,10 @@
 'use client';
 import { useRef, useEffect } from 'react';
 import { initCanvas, drawCircles, addCircle } from './lib/draw';
-import io from 'socket.io-client';
-import axios from 'axios';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let circles: { pos: { x: number; y: number }; vel: number }[] = [];
-  let socket;
-
-  const connectSocket = async () => {
-    await fetch('/api/socket');
-    socket = io();
-
-    socket.on('connect', () => {
-      console.log('Connected');
-    });
-
-    socket.on('disconnect', () => {
-      console.log('Disconnected');
-    });
-
-    socket.on(
-      'circles',
-      (circle: { pos: { x: number; y: number }; vel: number }[]) => {
-        circles = circle;
-      },
-    );
-
-    circles = (await axios.get('/api/circle')).data;
-  };
 
   const animate = (
     canvas: HTMLCanvasElement,
@@ -50,13 +25,12 @@ export default function Home() {
     const canvas = canvasRef.current;
     const context: CanvasRenderingContext2D = canvas.getContext('2d')!;
 
-    connectSocket();
     initCanvas(canvas, context);
     animate(canvas, context);
 
-    window.addEventListener('mousedown', (e) => addCircle(e));
+    window.addEventListener('mousedown', (e) => addCircle(e, circles));
     return () => {
-      window.removeEventListener('mousedown', (e) => addCircle(e));
+      window.removeEventListener('mousedown', (e) => addCircle(e, circles));
     };
   }, []);
 

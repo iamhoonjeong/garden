@@ -37,6 +37,10 @@ export const drawCircles = (
   context.clearRect(0, 0, width, height);
 
   for (let i = 0; i < circles.length; i++) {
+    if (circles[i].pos.x >= width || circles[i].pos.x <= 0) {
+      circles[i].vel *= -1;
+    }
+
     context.save();
     context.translate(0, 0);
     context.fillStyle = 'black';
@@ -44,11 +48,16 @@ export const drawCircles = (
     context.arc(circles[i].pos.x, circles[i].pos.y, cw, 0, Math.PI * 2);
     context.fill();
     context.restore();
+
+    circles[i].pos.x = circles[i].pos.x + circles[i].vel;
   }
 };
 
-export const addCircle = async (e: MouseEvent) => {
-  await axios.post('/api/circle', {
+export const addCircle = async (
+  e: MouseEvent,
+  circles: { pos: { x: number; y: number }; vel: number }[],
+) => {
+  circles.push({
     pos: {
       x: e.offsetX,
       y: e.offsetY,
