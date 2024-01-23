@@ -11,8 +11,6 @@ body {
 }
 
 video {
-  min-width: 100%;
-  min-height: 100%;
   transform: scaleX(-1);
 }
 
