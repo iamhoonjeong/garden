@@ -9,7 +9,7 @@ export default function Hand() {
     if (!videoRef.current) return;
 
     const video = videoRef.current;
-    const videoConstraints: MediaStreamConstraints = {
+    let videoConstraints: MediaStreamConstraints = {
       audio: false,
       video: {
         facingMode: 'user',
@@ -18,16 +18,21 @@ export default function Hand() {
       },
     };
 
-    videoPlay(video, videoConstraints);
-
-    if (window.navigator.userAgent.toLowerCase().search('iphone') !== -1) {
-      video.style.minWidth = `${window.innerWidth}px`;
-      video.style.minHeight = `${window.innerHeight}px`;
-      video.style.width = `${window.innerWidth}px`;
-      video.style.height = `${window.innerHeight}px`;
-      video.style.maxWidth = `${window.innerWidth}px`;
-      video.style.maxHeight = `${window.innerHeight}px`;
+    if (
+      window.navigator.userAgent.toLowerCase().search('iphone') !== -1 ||
+      window.navigator.userAgent.toLowerCase().search('ipad') !== -1
+    ) {
+      videoConstraints = {
+        audio: false,
+        video: {
+          facingMode: 'user',
+          width: screen.width,
+          height: screen.height,
+        },
+      };
     }
+
+    videoPlay(video, videoConstraints);
   }, []);
 
   const videoPlay = async (
