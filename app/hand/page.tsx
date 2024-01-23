@@ -16,15 +16,15 @@ export default function Hand() {
     const videoConstraints: MediaStreamConstraints = {
       audio: false,
       video: {
-        width: document.documentElement.clientWidth,
-        height: document.documentElement.clientHeight,
+        width: { ideal: window.innerWidth },
+        height: { ideal: window.innerHeight },
         facingMode: 'user',
       },
     };
 
     videoPlay(video, videoConstraints);
     setState({
-      width: document.documentElement.clientWidth,
+      width: window.innerWidth,
       height: window.innerHeight,
     });
   }, []);
