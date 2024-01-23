@@ -14,21 +14,21 @@ export default function Hand() {
       audio: false,
       video: {
         facingMode: 'user',
-        width: screen.width,
-        height: screen.height,
+        width: window.innerWidth,
+        height: window.innerHeight,
       },
     };
 
-    // if (window.navigator.userAgent.toLowerCase().search('iphone') !== -1) {
-    //   videoConstraints = {
-    //     audio: false,
-    //     video: {
-    //       facingMode: 'user',
-    //       width: { exact: screen.width },
-    //       height: { exact: screen.height },
-    //     },
-    //   };
-    // }
+    if (window.navigator.userAgent.toLowerCase().search('iphone') !== -1) {
+      videoConstraints = {
+        audio: false,
+        video: {
+          facingMode: 'user',
+          width: { min: screen.width, max: screen.height },
+          height: { min: screen.height, max: screen.height },
+        },
+      };
+    }
 
     videoPlay(video, videoConstraints);
   }, []);
