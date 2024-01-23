@@ -41,7 +41,7 @@ export default function Hand() {
         },
       };
 
-      // video.style.minWidth = `100vw`;
+      video.style.minWidth = `100vw`;
       video.style.minHeight = `100vh`;
       // video.style.maxWidth = `100vw`;
       // video.style.maxHeight = `100vh`;
