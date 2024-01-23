@@ -1,8 +1,7 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function Hand() {
-  const [state, setState] = useState<any>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -15,25 +14,23 @@ export default function Hand() {
       audio: false,
       video: {
         facingMode: 'user',
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: screen.width,
+        height: screen.height,
       },
     };
 
-    if (window.navigator.userAgent.toLowerCase().search('iphone') !== -1) {
-      videoConstraints = {
-        audio: false,
-        video: {
-          facingMode: 'user',
-          width: { exact: screen.width },
-          height: { exact: screen.height },
-        },
-      };
-    }
+    // if (window.navigator.userAgent.toLowerCase().search('iphone') !== -1) {
+    //   videoConstraints = {
+    //     audio: false,
+    //     video: {
+    //       facingMode: 'user',
+    //       width: { exact: screen.width },
+    //       height: { exact: screen.height },
+    //     },
+    //   };
+    // }
 
     videoPlay(video, videoConstraints);
-
-    setState(navigator.mediaDevices.getSupportedConstraints());
   }, []);
 
   const videoPlay = (
@@ -53,15 +50,6 @@ export default function Hand() {
 
   return (
     <main className="container">
-      {state &&
-        Object.keys(state).map((key, i) => {
-          console.log(state);
-          return (
-            <div key={i}>
-              {key}: {`${state[key]}`}
-            </div>
-          );
-        })}
       <video ref={videoRef} playsInline={true} muted={true}></video>
     </main>
   );
