@@ -31,8 +31,8 @@ export default function Hand() {
         },
       };
 
-      video.style.minWidth = `${screen.width}px`;
-      video.style.minHeight = `${screen.height}px`;
+      video.style.minWidth = `${screen.width / window.devicePixelRatio}px`;
+      video.style.minHeight = `${screen.height / window.devicePixelRatio}px`;
     }
 
     videoPlay(video, videoConstraints);
