@@ -1,11 +1,14 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Hand() {
+  const [state, setState] = useState<any>({
+    width: 0,
+    height: 0,
+  });
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    console.log(window);
     if (!window) return;
     if (!videoRef.current) return;
 
@@ -13,14 +16,17 @@ export default function Hand() {
     const videoConstraints: MediaStreamConstraints = {
       audio: false,
       video: {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight,
         facingMode: 'user',
       },
     };
 
     videoPlay(video, videoConstraints);
-    window.addEventListener('click', () => videoPlay(video, videoConstraints));
+    setState({
+      width: document.documentElement.clientWidth,
+      height: window.innerHeight,
+    });
   }, []);
 
   const videoPlay = async (
@@ -40,6 +46,8 @@ export default function Hand() {
 
   return (
     <main className="container">
+      <div>{state.width}</div>
+      <div>{state.height}</div>
       <video
         ref={videoRef}
         autoPlay={true}
