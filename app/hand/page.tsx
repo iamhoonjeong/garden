@@ -31,9 +31,11 @@ export default function Hand() {
     videoPlay(video, videoConstraints);
 
     if (innerWidth < innerHeight) {
+      video.style.maxWidth = `${window.innerWidth}px`;
       video.style.minHeight = `100%`;
     } else {
       video.style.minWidth = `100%`;
+      video.style.maxHeight = `${window.innerHeight}px`;
     }
   }, []);
 
