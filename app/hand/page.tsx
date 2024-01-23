@@ -32,19 +32,19 @@ export default function Hand() {
             min: screen.width,
             max: screen.width,
           },
-          height: {
-            exact: screen.height,
-            ideal: screen.height,
-            min: screen.height,
-            max: screen.height,
-          },
+          // height: {
+          //   exact: screen.height,
+          //   ideal: screen.height,
+          //   min: screen.height,
+          //   max: screen.height,
+          // },
         },
       };
 
-      video.style.minWidth = `100vw`;
+      // video.style.minWidth = `100vw`;
       video.style.minHeight = `100vh`;
-      video.style.maxWidth = `100vw`;
-      video.style.maxHeight = `100vh`;
+      // video.style.maxWidth = `100vw`;
+      // video.style.maxHeight = `100vh`;
     }
 
     videoPlay(video, videoConstraints);
