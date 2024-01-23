@@ -16,16 +16,8 @@ export default function Hand() {
     const videoConstraints: MediaStreamConstraints = {
       audio: false,
       video: {
-        width: {
-          min: window.innerWidth,
-          ideal: window.innerWidth,
-          max: window.innerWidth,
-        },
-        height: {
-          min: window.innerHeight,
-          ideal: window.innerHeight,
-          max: window.innerHeight,
-        },
+        width: window.innerWidth,
+        height: window.innerHeight,
         facingMode: 'user',
       },
     };
@@ -47,6 +39,14 @@ export default function Hand() {
 
     try {
       video.srcObject = stream;
+
+      await new Promise((resolve: any) => {
+        video.onloadedmetadata = () => {
+          resolve(video);
+        };
+      });
+
+      video.play();
     } catch (e) {
       console.error(e);
     }
