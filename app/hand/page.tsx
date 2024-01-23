@@ -42,7 +42,7 @@ export default function Hand() {
       };
 
       // video.style.minWidth = `${screen.width}px`;
-      // video.style.minHeight = `${screen.height}px`;
+      video.style.minHeight = `100%`;
     }
 
     videoPlay(video, videoConstraints);
