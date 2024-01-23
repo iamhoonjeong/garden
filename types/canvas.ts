@@ -1,10 +1,18 @@
+export type Cursor = {
+  x: number;
+  y: number;
+};
+
 export type Circle = {
-  pos: {
-    x: number;
-    y: number;
-  };
-  vel: {
-    x: number;
-    y: number;
-  };
+  x: number;
+  y: number;
+
+  ix: number;
+  iy: number;
+
+  ax: number;
+  ay: number;
+
+  vx: number;
+  vy: number;
 };

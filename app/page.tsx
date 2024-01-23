@@ -1,11 +1,17 @@
 'use client';
 import { useRef, useEffect } from 'react';
-import { canvasSizeAdjustment, canvasAnimation, addCircle } from '@/lib/canvas';
+import {
+  canvasSizeAdjustment,
+  canvasAnimation,
+  drawingCircles,
+  addCircle,
+} from '@/lib/canvas';
 import { Circle } from '@/types/canvas';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let circles: Circle[] = [];
+  let cursor = { x: 9999, y: 9999 };
 
   useEffect(() => {
     if (!window) return;
@@ -15,13 +21,53 @@ export default function Home() {
     const context: CanvasRenderingContext2D = canvas.getContext('2d')!;
 
     canvasSizeAdjustment(canvas, context);
-    canvasAnimation(canvas, context, circles);
+    canvasAnimation(canvas, context, cursor, drawingCircles, circles);
 
-    canvas.addEventListener('mousemove', (e) => addCircle(e, circles));
+    canvas.addEventListener('mousedown', onMouseDown);
+    canvas.addEventListener('touchstart', onTouchStart);
     return () => {
-      canvas.removeEventListener('mousemove', (e) => addCircle(e, circles));
+      canvas.removeEventListener('mousedown', onMouseDown);
+      canvas.removeEventListener('touchend', onTouchStart);
     };
   }, []);
+
+  const onTouchStart = () => {
+    window.addEventListener('touchmove', onTouchMove);
+    window.addEventListener('touchend', onTouchEnd);
+  };
+
+  const onTouchMove = (e: TouchEvent) => {
+    cursor.x = e.touches[0].clientX;
+    cursor.y = e.touches[0].clientY;
+    addCircle(e, circles);
+  };
+
+  const onTouchEnd = () => {
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
+
+    cursor.x = 9999;
+    cursor.y = 9999;
+  };
+
+  const onMouseDown = () => {
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  };
+
+  const onMouseMove = (e: MouseEvent) => {
+    cursor.x = e.offsetX;
+    cursor.y = e.offsetY;
+    addCircle(e, circles);
+  };
+
+  const onMouseUp = () => {
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+
+    cursor.x = 9999;
+    cursor.y = 9999;
+  };
 
   return (
     <div className="container">
