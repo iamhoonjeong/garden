@@ -19,6 +19,7 @@ export default function Hand() {
       },
     };
 
+    videoPlay(video, videoConstraints);
     window.addEventListener('click', () => videoPlay(video, videoConstraints));
   }, []);
 
@@ -39,7 +40,12 @@ export default function Hand() {
 
   return (
     <main className="container">
-      <video ref={videoRef} autoPlay={true}></video>
+      <video
+        ref={videoRef}
+        autoPlay={true}
+        playsInline={true}
+        muted={true}
+      ></video>
     </main>
   );
 }
