@@ -26,12 +26,12 @@ export default function Hand() {
         audio: false,
         video: {
           facingMode: 'user',
-          width: {
-            exact: screen.width,
-            ideal: screen.width,
-            min: screen.width,
-            max: screen.width,
-          },
+          // width: {
+          //   exact: screen.width,
+          //   ideal: screen.width,
+          //   min: screen.width,
+          //   max: screen.width,
+          // },
           height: {
             exact: screen.height,
             ideal: screen.height,
@@ -41,8 +41,8 @@ export default function Hand() {
         },
       };
 
-      // video.style.minWidth = `${screen.width}px`;
-      video.style.minHeight = `100%`;
+      video.style.minWidth = `100%`;
+      // video.style.minHeight = `100%`;
     }
 
     videoPlay(video, videoConstraints);
