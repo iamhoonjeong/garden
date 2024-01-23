@@ -2,10 +2,6 @@
 import { useEffect, useRef, useState } from 'react';
 
 export default function Hand() {
-  const [state, setState] = useState({
-    width: 0,
-    height: 0,
-  });
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -34,11 +30,12 @@ export default function Hand() {
           height: screen.height,
         },
       };
+
+      video.style.minWidth = `${screen.width}px`;
+      video.style.minHeight = `${screen.height}px`;
     }
 
     videoPlay(video, videoConstraints);
-
-    setState({ width: screen.width, height: screen.height });
   }, []);
 
   const videoPlay = async (
@@ -61,8 +58,6 @@ export default function Hand() {
 
   return (
     <main className="container">
-      <div>{state.width}</div>
-      <div>{state.height}</div>
       <video
         ref={videoRef}
         autoPlay={true}
