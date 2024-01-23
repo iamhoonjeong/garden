@@ -24,7 +24,7 @@ export default function Hand() {
         audio: false,
         video: {
           facingMode: 'user',
-          width: { min: screen.width, max: screen.width },
+          width: { max: screen.width },
           height: { min: screen.height, max: screen.height },
         },
       };
