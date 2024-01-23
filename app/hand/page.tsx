@@ -1,7 +1,8 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Hand() {
+  const [state, setState] = useState<any>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -31,34 +32,37 @@ export default function Hand() {
     }
 
     videoPlay(video, videoConstraints);
+
+    setState(navigator.mediaDevices.getSupportedConstraints());
   }, []);
 
-  const videoPlay = async (
+  const videoPlay = (
     video: HTMLVideoElement,
     constraints: MediaStreamConstraints,
   ) => {
-    const stream = await window.navigator.mediaDevices.getUserMedia(
-      constraints,
-    );
-
-    try {
-      video.srcObject = stream;
-      video.onloadedmetadata = () => {
-        video.play();
-      };
-    } catch (e) {
-      console.error(e);
-    }
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then((mediaStream) => {
+        video.srcObject = mediaStream;
+        video.onloadedmetadata = () => {
+          video.play();
+        };
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
     <main className="container">
-      <video
-        ref={videoRef}
-        autoPlay={true}
-        playsInline={true}
-        muted={true}
-      ></video>
+      {state &&
+        Object.keys(state).map((key, i) => {
+          console.log(state);
+          return (
+            <div key={i}>
+              {key}: {`${state[key]}`}
+            </div>
+          );
+        })}
+      <video ref={videoRef} playsInline={true} muted={true}></video>
     </main>
   );
 }
