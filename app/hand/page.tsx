@@ -19,7 +19,7 @@ export default function Hand() {
       },
     };
 
-    videoPlay(video, videoConstraints);
+    window.addEventListener('click', () => videoPlay(video, videoConstraints));
   }, []);
 
   const videoPlay = async (
