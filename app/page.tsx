@@ -1,22 +1,11 @@
 'use client';
 import { useRef, useEffect } from 'react';
-import { initCanvas, drawCircles, addCircle } from './lib/draw';
+import { canvasSizeAdjustment, canvasAnimation, addCircle } from '@/lib/canvas';
+import { Circle } from '@/types/canvas';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  let circles: { pos: { x: number; y: number }; vel: number }[] = [];
-
-  const animate = (
-    canvas: HTMLCanvasElement,
-    context: CanvasRenderingContext2D,
-  ) => {
-    drawCircles(canvas, context, circles);
-
-    const animateId = requestAnimationFrame(() => animate(canvas, context));
-    if (false) {
-      cancelAnimationFrame(animateId);
-    }
-  };
+  let circles: Circle[] = [];
 
   useEffect(() => {
     if (!window) return;
@@ -25,12 +14,12 @@ export default function Home() {
     const canvas = canvasRef.current;
     const context: CanvasRenderingContext2D = canvas.getContext('2d')!;
 
-    initCanvas(canvas, context);
-    animate(canvas, context);
+    canvasSizeAdjustment(canvas, context);
+    canvasAnimation(canvas, context, circles);
 
-    window.addEventListener('mousedown', (e) => addCircle(e, circles));
+    canvas.addEventListener('mousemove', (e) => addCircle(e, circles));
     return () => {
-      window.removeEventListener('mousedown', (e) => addCircle(e, circles));
+      canvas.removeEventListener('mousemove', (e) => addCircle(e, circles));
     };
   }, []);
 

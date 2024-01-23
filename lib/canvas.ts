@@ -1,6 +1,6 @@
-import axios from 'axios';
+import { Circle } from '@/types/canvas';
 
-export const initCanvas = (
+export const canvasSizeAdjustment = (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
 ) => {
@@ -19,16 +19,25 @@ export const initCanvas = (
   context.scale(scale, scale);
 };
 
-export const drawCircles = (
+export const canvasAnimation = (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
-  circles: {
-    pos: {
-      x: number;
-      y: number;
-    };
-    vel: number;
-  }[],
+  circles: Circle[],
+) => {
+  drawingCircles(canvas, context, circles);
+
+  const animateId = requestAnimationFrame(() =>
+    canvasAnimation(canvas, context, circles),
+  );
+  if (false) {
+    cancelAnimationFrame(animateId);
+  }
+};
+
+export const drawingCircles = (
+  canvas: HTMLCanvasElement,
+  context: CanvasRenderingContext2D,
+  circles: Circle[],
 ) => {
   let width = canvas.offsetWidth;
   let height = canvas.offsetHeight;
@@ -38,8 +47,11 @@ export const drawCircles = (
 
   for (let i = 0; i < circles.length; i++) {
     if (circles[i].pos.x >= width || circles[i].pos.x <= 0) {
-      circles[i].vel *= -1;
+      circles[i].vel.x *= -1;
     }
+    // if (circles[i].pos.y >= height || circles[i].pos.y <= 0) {
+    //   circles[i].vel.y *= -1;
+    // }
 
     context.save();
     context.translate(0, 0);
@@ -49,19 +61,20 @@ export const drawCircles = (
     context.fill();
     context.restore();
 
-    circles[i].pos.x = circles[i].pos.x + circles[i].vel;
+    circles[i].pos.x = circles[i].pos.x + circles[i].vel.x;
+    // circles[i].pos.y = circles[i].pos.y + circles[i].vel.y;
   }
 };
 
-export const addCircle = async (
-  e: MouseEvent,
-  circles: { pos: { x: number; y: number }; vel: number }[],
-) => {
+export const addCircle = async (e: MouseEvent, circles: Circle[]) => {
   circles.push({
     pos: {
       x: e.offsetX,
       y: e.offsetY,
     },
-    vel: 1,
+    vel: {
+      x: 1,
+      y: 1,
+    },
   });
 };
