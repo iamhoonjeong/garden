@@ -12,9 +12,19 @@ export default function Hand() {
     const videoConstraints: MediaStreamConstraints = {
       audio: false,
       video: {
-        width: window.innerWidth,
-        height: window.innerHeight,
         facingMode: 'user',
+        width: {
+          min: window.innerWidth,
+          ideal: window.innerWidth,
+          max: window.innerWidth,
+          exact: window.innerWidth,
+        },
+        height: {
+          min: window.innerHeight,
+          ideal: window.innerHeight,
+          max: window.innerHeight,
+          exact: window.innerHeight,
+        },
       },
     };
 
