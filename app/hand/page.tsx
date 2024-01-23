@@ -18,10 +18,10 @@ export default function Hand() {
       },
     };
 
+    videoPlay(video, videoConstraints);
+
     video.style.width = `${window.innerWidth}px`;
     video.style.height = `${window.innerHeight}px`;
-
-    videoPlay(video, videoConstraints);
   }, []);
 
   const videoPlay = async (
