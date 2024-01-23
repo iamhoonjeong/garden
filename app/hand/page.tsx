@@ -30,8 +30,11 @@ export default function Hand() {
 
     videoPlay(video, videoConstraints);
 
-    video.style.width = `${window.innerWidth}px`;
-    video.style.height = `${window.innerHeight}px`;
+    if (innerWidth < innerHeight) {
+      video.style.minHeight = `100%`;
+    } else {
+      video.style.minWidth = `100%`;
+    }
   }, []);
 
   const videoPlay = async (
@@ -44,14 +47,9 @@ export default function Hand() {
 
     try {
       video.srcObject = stream;
-
-      await new Promise((resolve: any) => {
-        video.onloadedmetadata = () => {
-          resolve(video);
-        };
-      });
-
-      video.play();
+      video.onloadedmetadata = () => {
+        video.play();
+      };
     } catch (e) {
       console.error(e);
     }
