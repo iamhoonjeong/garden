@@ -70,13 +70,13 @@ export default function Home() {
   };
 
   return (
-    <div className="container">
+    <main className="container">
       {process.env.NEXT_PUBLIC_CONSTRUCTION === 'true' && (
         <div className="construction">
           <div>UNDER CONSTRUCTION</div>
         </div>
       )}
       <canvas ref={canvasRef}></canvas>
-    </div>
+    </main>
   );
 }
