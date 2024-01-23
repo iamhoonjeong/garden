@@ -13,28 +13,19 @@ export default function Hand() {
       audio: false,
       video: {
         facingMode: 'user',
-        width: {
-          min: window.innerWidth,
-          ideal: window.innerWidth,
-          max: window.innerWidth,
-          exact: window.innerWidth,
-        },
-        height: {
-          min: window.innerHeight,
-          ideal: window.innerHeight,
-          max: window.innerHeight,
-          exact: window.innerHeight,
-        },
+        width: window.innerWidth,
+        height: window.innerHeight,
       },
     };
 
     videoPlay(video, videoConstraints);
 
-    if (innerWidth < innerHeight) {
+    if (window.navigator.userAgent.toLowerCase().search('iphone') !== -1) {
+      video.style.minWidth = `${window.innerWidth}px`;
+      video.style.minHeight = `${window.innerHeight}px`;
+      video.style.width = `${window.innerWidth}px`;
+      video.style.height = `${window.innerHeight}px`;
       video.style.maxWidth = `${window.innerWidth}px`;
-      video.style.minHeight = `100%`;
-    } else {
-      video.style.minWidth = `100%`;
       video.style.maxHeight = `${window.innerHeight}px`;
     }
   }, []);
