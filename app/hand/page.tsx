@@ -1,14 +1,21 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import { canvasSizeAdjustment } from '@/lib/canvas';
 
 export default function Hand() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!window) return;
     if (!videoRef.current) return;
+    if (!canvasRef.current) return;
 
     const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const context: CanvasRenderingContext2D = canvas.getContext('2d')!;
+
+    canvasSizeAdjustment(canvas, context);
 
     let videoConstraints: MediaStreamConstraints = {
       audio: false,
@@ -49,6 +56,7 @@ export default function Hand() {
 
   return (
     <main className="container">
+      <canvas ref={canvasRef}></canvas>
       <video ref={videoRef} playsInline={true} muted={true}></video>
     </main>
   );
