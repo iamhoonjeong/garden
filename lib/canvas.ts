@@ -115,6 +115,7 @@ export const reflectVideoAnimation = async (
 
   let width = window.innerWidth;
   let height = window.innerHeight;
+  let deviceRatio = window.devicePixelRatio;
   let centerx = 0;
   let centery = 0;
 
@@ -148,14 +149,17 @@ export const reflectVideoAnimation = async (
 
         context.save();
         context.beginPath();
-        context.translate(thumb.x / 2, thumb.y / 2);
+        context.translate(thumb.x / deviceRatio, thumb.y / deviceRatio);
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.fill();
         context.restore();
 
         context.save();
         context.beginPath();
-        context.translate(indexFinger.x / 2, indexFinger.y / 2);
+        context.translate(
+          indexFinger.x / deviceRatio,
+          indexFinger.y / deviceRatio,
+        );
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.fill();
         context.restore();
