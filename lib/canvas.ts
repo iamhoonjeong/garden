@@ -105,7 +105,8 @@ export const addCircle = async (
   }
 };
 
-export const reflectVideoAnimation = async (
+let array: any = [];
+export const detectVideoAnimation = async (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   video: HTMLVideoElement,
@@ -147,6 +148,16 @@ export const reflectVideoAnimation = async (
         const thumb = hands[i].keypoints[4];
         const indexFinger = hands[i].keypoints[8];
 
+        const tx = thumb.x / deviceRatio;
+        const ty = thumb.y / deviceRatio;
+        const ifx = indexFinger.x / deviceRatio;
+        const ify = indexFinger.y / deviceRatio;
+
+        const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
+        if (dd < 50) {
+          array.push({ x: thumb.x / deviceRatio, y: thumb.y / deviceRatio });
+        }
+
         context.save();
         context.beginPath();
         context.translate(thumb.x / deviceRatio, thumb.y / deviceRatio);
@@ -165,13 +176,22 @@ export const reflectVideoAnimation = async (
         context.restore();
       }
     }
+
+    for (let i = 0; i < array.length; i++) {
+      context.save();
+      context.translate(array[i].x, array[i].y);
+      context.beginPath();
+      context.arc(0, 0, 20, 0, Math.PI * 2);
+      context.fill();
+      context.restore();
+    }
   } catch (error) {
     detector.dispose();
     console.error(error);
   }
 
   const animationId = requestAnimationFrame(() =>
-    reflectVideoAnimation(canvas, context, video, detector),
+    detectVideoAnimation(canvas, context, video, detector),
   );
   if (false) {
     cancelAnimationFrame(animationId);

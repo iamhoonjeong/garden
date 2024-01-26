@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { HandDetector } from '@tensorflow-models/hand-pose-detection';
-import { canvasSizeAdjustment, reflectVideoAnimation } from '@/lib/canvas';
+import { canvasSizeAdjustment, detectVideoAnimation } from '@/lib/canvas';
 import { createDetector } from '@/lib/tensorflow';
 
 export default function Hand() {
@@ -38,7 +38,7 @@ export default function Hand() {
     };
 
     videoPlay(video, videoConstraints);
-    reflectVideoAnimation(canvas, context, video, detector);
+    detectVideoAnimation(canvas, context, video, detector);
   }, [detector]);
 
   const videoPlay = (
