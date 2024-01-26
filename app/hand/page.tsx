@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import { canvasSizeAdjustment } from '@/lib/canvas';
+import { canvasSizeAdjustment, reflectVideoAnimation } from '@/lib/canvas';
 
 export default function Hand() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -37,6 +37,7 @@ export default function Hand() {
     }
 
     videoPlay(video, videoConstraints);
+    reflectVideoAnimation(canvas, context, video);
   }, []);
 
   const videoPlay = (

@@ -28,11 +28,11 @@ export const canvasAnimation = (
 ) => {
   drawingFunction(canvas, context, cursor, elements);
 
-  const animateId = requestAnimationFrame(() =>
+  const animationId = requestAnimationFrame(() =>
     canvasAnimation(canvas, context, cursor, drawingFunction, elements),
   );
   if (false) {
-    cancelAnimationFrame(animateId);
+    cancelAnimationFrame(animationId);
   }
 };
 
@@ -101,5 +101,26 @@ export const addCircle = async (
       vx: 0,
       vy: 0,
     });
+  }
+};
+
+export const reflectVideoAnimation = (
+  canvas: HTMLCanvasElement,
+  context: CanvasRenderingContext2D,
+  video: HTMLVideoElement,
+) => {
+  let width = window.innerWidth;
+
+  context.save();
+  context.translate(width, 0);
+  context.scale(-1, 1);
+  context.drawImage(video, 0, 0);
+  context.restore();
+
+  const animationId = requestAnimationFrame(() =>
+    reflectVideoAnimation(canvas, context, video),
+  );
+  if (false) {
+    cancelAnimationFrame(animationId);
   }
 };
