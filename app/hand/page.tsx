@@ -19,20 +19,13 @@ export default function Hand() {
 
     let videoConstraints: MediaStreamConstraints = {
       audio: false,
-      video: {
-        facingMode: 'user',
-        width: window.innerWidth,
-        height: window.innerHeight,
-      },
+      video: { facingMode: 'user' },
     };
 
     if (window.navigator.userAgent.toLowerCase().search('iphone') !== -1) {
       videoConstraints = {
         audio: false,
-        video: {
-          facingMode: 'user',
-          height: { min: screen.height },
-        },
+        video: { facingMode: 'user' },
       };
     }
 

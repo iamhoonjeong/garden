@@ -110,11 +110,27 @@ export const reflectVideoAnimation = (
   video: HTMLVideoElement,
 ) => {
   let width = window.innerWidth;
+  let height = window.innerHeight;
+  let centerx = 0;
+  let centery = 0;
 
   context.save();
   context.translate(width, 0);
   context.scale(-1, 1);
-  context.drawImage(video, 0, 0);
+
+  if (width > height) {
+    width = window.innerWidth;
+    height = width * (video.clientHeight / video.clientWidth);
+    centerx = 0;
+    centery = window.innerHeight - height;
+  } else if (width < height) {
+    width = height * (video.clientWidth / video.clientHeight);
+    height = window.innerHeight;
+    centerx = window.innerWidth - width;
+    centery = 0;
+  }
+
+  context.drawImage(video, centerx * 0.5, centery * 0.5, width, height);
   context.restore();
 
   const animationId = requestAnimationFrame(() =>
