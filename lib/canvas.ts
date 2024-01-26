@@ -1,4 +1,5 @@
 import { Circle, Cursor } from '@/types/canvas';
+import { Hand, HandDetector } from '@tensorflow-models/hand-pose-detection';
 
 export const canvasSizeAdjustment = (
   canvas: HTMLCanvasElement,
@@ -104,16 +105,20 @@ export const addCircle = async (
   }
 };
 
-export const reflectVideoAnimation = (
+export const reflectVideoAnimation = async (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   video: HTMLVideoElement,
+  detector: HandDetector,
 ) => {
+  if (!detector) return;
+
   let width = window.innerWidth;
   let height = window.innerHeight;
   let centerx = 0;
   let centery = 0;
 
+  context.clearRect(0, 0, width, height);
   context.save();
   context.translate(width, 0);
   context.scale(-1, 1);
@@ -133,8 +138,36 @@ export const reflectVideoAnimation = (
   context.drawImage(video, centerx * 0.5, centery * 0.5, width, height);
   context.restore();
 
+  let hands: Hand[];
+  try {
+    hands = await detector.estimateHands(canvas);
+    if (hands.length >= 1) {
+      for (let i = 0; i < hands.length; i++) {
+        const thumb = hands[i].keypoints[4];
+        const indexFinger = hands[i].keypoints[8];
+
+        context.save();
+        context.beginPath();
+        context.translate(thumb.x / 2, thumb.y / 2);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.fill();
+        context.restore();
+
+        context.save();
+        context.beginPath();
+        context.translate(indexFinger.x / 2, indexFinger.y / 2);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.fill();
+        context.restore();
+      }
+    }
+  } catch (error) {
+    detector.dispose();
+    console.error(error);
+  }
+
   const animationId = requestAnimationFrame(() =>
-    reflectVideoAnimation(canvas, context, video),
+    reflectVideoAnimation(canvas, context, video, detector),
   );
   if (false) {
     cancelAnimationFrame(animationId);

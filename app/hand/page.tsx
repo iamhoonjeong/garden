@@ -1,15 +1,30 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { HandDetector } from '@tensorflow-models/hand-pose-detection';
 import { canvasSizeAdjustment, reflectVideoAnimation } from '@/lib/canvas';
+import { createDetector } from '@/lib/tensorflow';
 
 export default function Hand() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [detector, setDetector] = useState<HandDetector>();
+
+  const getDetector = async () => {
+    const data = await createDetector();
+    setDetector(data);
+  };
+
+  useEffect(() => {
+    if (!detector) {
+      getDetector();
+    }
+  }, []);
 
   useEffect(() => {
     if (!window) return;
     if (!videoRef.current) return;
     if (!canvasRef.current) return;
+    if (!detector) return;
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -22,16 +37,9 @@ export default function Hand() {
       video: { facingMode: 'user' },
     };
 
-    if (window.navigator.userAgent.toLowerCase().search('iphone') !== -1) {
-      videoConstraints = {
-        audio: false,
-        video: { facingMode: 'user' },
-      };
-    }
-
     videoPlay(video, videoConstraints);
-    reflectVideoAnimation(canvas, context, video);
-  }, []);
+    reflectVideoAnimation(canvas, context, video, detector);
+  }, [detector]);
 
   const videoPlay = (
     video: HTMLVideoElement,
