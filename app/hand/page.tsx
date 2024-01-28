@@ -12,8 +12,12 @@ export default function Hand() {
   let circles: { x: number; y: number }[] = [];
 
   const getDetector = async () => {
-    const detector = await createTensorflowDetector();
-    setDetector(detector);
+    try {
+      const detector = await createTensorflowDetector();
+      setDetector(detector);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {

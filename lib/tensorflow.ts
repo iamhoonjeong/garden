@@ -3,6 +3,7 @@ import {
   SupportedModels,
   MediaPipeHandsMediaPipeModelConfig,
   createDetector,
+  HandDetector,
 } from '@tensorflow-models/hand-pose-detection';
 
 export async function createTensorflowDetector() {
@@ -11,7 +12,13 @@ export async function createTensorflowDetector() {
     runtime: 'mediapipe',
     solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${VERSION}`,
     modelType: 'full',
-    maxHands: 4,
+    maxHands: 1,
   };
-  return await createDetector(model, detectorConfig);
+
+  try {
+    let detector: HandDetector = await createDetector(model, detectorConfig);
+    return detector;
+  } catch (error) {
+    console.error(error);
+  }
 }
