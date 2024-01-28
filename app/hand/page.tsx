@@ -13,8 +13,7 @@ export default function Hand() {
 
   const getDetector = async () => {
     try {
-      const detector = await createTensorflowDetector();
-      setDetector(detector);
+      setDetector(await createTensorflowDetector());
     } catch (error) {
       console.error(error);
     }
