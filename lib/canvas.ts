@@ -105,12 +105,12 @@ export const addCircle = async (
   }
 };
 
-let array: any = [];
 export const detectVideoAnimation = async (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   video: HTMLVideoElement,
   detector: HandDetector,
+  circles: { x: number; y: number }[],
 ) => {
   if (!detector) return;
 
@@ -155,31 +155,28 @@ export const detectVideoAnimation = async (
 
         const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
         if (dd < 50) {
-          array.push({ x: thumb.x / deviceRatio, y: thumb.y / deviceRatio });
+          circles.push({ x: tx, y: ty });
         }
 
         context.save();
         context.beginPath();
-        context.translate(thumb.x / deviceRatio, thumb.y / deviceRatio);
+        context.translate(tx, ty);
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.fill();
         context.restore();
 
         context.save();
         context.beginPath();
-        context.translate(
-          indexFinger.x / deviceRatio,
-          indexFinger.y / deviceRatio,
-        );
+        context.translate(ifx, ify);
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.fill();
         context.restore();
       }
     }
 
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < circles.length; i++) {
       context.save();
-      context.translate(array[i].x, array[i].y);
+      context.translate(circles[i].x, circles[i].y);
       context.beginPath();
       context.arc(0, 0, 20, 0, Math.PI * 2);
       context.fill();
@@ -191,7 +188,7 @@ export const detectVideoAnimation = async (
   }
 
   const animationId = requestAnimationFrame(() =>
-    detectVideoAnimation(canvas, context, video, detector),
+    detectVideoAnimation(canvas, context, video, detector, circles),
   );
   if (false) {
     cancelAnimationFrame(animationId);

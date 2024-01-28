@@ -2,16 +2,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { HandDetector } from '@tensorflow-models/hand-pose-detection';
 import { canvasSizeAdjustment, detectVideoAnimation } from '@/lib/canvas';
-import { createDetector } from '@/lib/tensorflow';
+import { createTensorflowDetector } from '@/lib/tensorflow';
 
 export default function Hand() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [detector, setDetector] = useState<HandDetector>();
 
+  let circles: { x: number; y: number }[] = [];
+
   const getDetector = async () => {
-    const data = await createDetector();
-    setDetector(data);
+    const detector = await createTensorflowDetector();
+    setDetector(detector);
   };
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function Hand() {
     };
 
     videoPlay(video, videoConstraints);
-    detectVideoAnimation(canvas, context, video, detector);
+    detectVideoAnimation(canvas, context, video, detector, circles);
   }, [detector]);
 
   const videoPlay = (
