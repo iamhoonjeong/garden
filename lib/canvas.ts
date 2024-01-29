@@ -143,8 +143,9 @@ export const detectVideoAnimation = async (
   let hands: Hand[];
   try {
     hands = await detector.estimateHands(canvas);
-    if (hands.length >= 1) {
+    if (hands.length) {
       for (let i = 0; i < hands.length; i++) {
+        const hand = hands[i].handedness;
         const thumb = hands[i].keypoints[4];
         const indexFinger = hands[i].keypoints[8];
 
@@ -154,9 +155,6 @@ export const detectVideoAnimation = async (
         const ify = indexFinger.y / deviceRatio;
 
         const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
-        if (dd < 50) {
-          circles.push({ x: tx, y: ty });
-        }
 
         context.save();
         context.beginPath();
@@ -171,6 +169,14 @@ export const detectVideoAnimation = async (
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.fill();
         context.restore();
+
+        if (dd < 50) {
+          if (hand === 'Left') {
+            circles.push({ x: tx, y: ty });
+          } else if (hand === 'Right') {
+            circles = [];
+          }
+        }
       }
     }
 

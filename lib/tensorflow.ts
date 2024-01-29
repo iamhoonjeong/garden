@@ -11,7 +11,7 @@ export async function createTensorflowDetector() {
     runtime: 'mediapipe',
     solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${VERSION}`,
     modelType: 'full',
-    maxHands: 1,
+    maxHands: 2,
   };
 
   try {
