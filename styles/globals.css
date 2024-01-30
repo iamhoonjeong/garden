@@ -12,8 +12,24 @@ body {
   overflow: hidden;
 }
 
-video {
-  /* transform: scaleX(-1); */
+.navigation {
+  position: fixed;
+  height: 40px;
+  top: 1px;
+  left: 1px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation > ul {
+  display: flex;
+}
+
+.navigation > ul > li {
+  margin-left: 16px;
+  list-style-type: none;
 }
 
 .container {
@@ -35,4 +51,9 @@ video {
 
 .construction > div {
   display: inline-block;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Lora } from 'next/font/google';
 import '@/styles/globals.css';
+import Navigation from '@/components/Navigation';
 
 export const metadata: Metadata = {
   title: 'Garden',
@@ -20,7 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={lora.className}>{children}</body>
+      <body className={lora.className}>
+        <Navigation />
+        {children}
+      </body>
     </html>
   );
 }
