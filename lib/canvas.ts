@@ -119,6 +119,7 @@ export const detectVideoAnimation = async (
   let deviceRatio = window.devicePixelRatio;
   let centerx = 0;
   let centery = 0;
+  let imageGapPercent = 0;
 
   context.clearRect(0, 0, width, height);
   context.save();
@@ -128,13 +129,28 @@ export const detectVideoAnimation = async (
   if (width > height) {
     width = window.innerWidth;
     height = width * (video.clientHeight / video.clientWidth);
-    centerx = 0;
+
+    if (height < window.innerHeight) {
+      imageGapPercent = (window.innerHeight - height) / height + 1;
+      width = width * imageGapPercent;
+      height = height * imageGapPercent;
+    }
+
+    centerx = window.innerWidth - width;
     centery = window.innerHeight - height;
+    console.log(width);
   } else if (width < height) {
     width = height * (video.clientWidth / video.clientHeight);
     height = window.innerHeight;
+
+    if (width < window.innerWidth) {
+      imageGapPercent = (window.innerWidth - width) / width + 1;
+      width = width * imageGapPercent;
+      height = height * imageGapPercent;
+    }
+
     centerx = window.innerWidth - width;
-    centery = 0;
+    centery = window.innerHeight - height;
   }
 
   context.drawImage(video, centerx * 0.5, centery * 0.5, width, height);
