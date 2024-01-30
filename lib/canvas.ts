@@ -32,7 +32,7 @@ export const canvasAnimation = (
   const animationId = requestAnimationFrame(() =>
     canvasAnimation(canvas, context, cursor, drawingFunction, elements),
   );
-  if (false) {
+  if (window.location.pathname !== '/') {
     cancelAnimationFrame(animationId);
   }
 };
@@ -196,7 +196,8 @@ export const detectVideoAnimation = async (
   const animationId = requestAnimationFrame(() =>
     detectVideoAnimation(canvas, context, video, detector, circles),
   );
-  if (false) {
+  if (window.location.pathname !== '/drawing-with-hand') {
     cancelAnimationFrame(animationId);
+    detector.dispose();
   }
 };
