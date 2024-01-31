@@ -118,8 +118,8 @@ export const detectVideoAnimation = async (
   let height = window.innerHeight;
   let deviceRatio = window.devicePixelRatio;
   let imageGapPercent = 1;
-  let centerx = 0;
-  let centery = 0;
+  let gapx = 0;
+  let gapy = 0;
 
   context.clearRect(0, 0, width, height);
   context.save();
@@ -147,10 +147,10 @@ export const detectVideoAnimation = async (
     }
   }
 
-  centerx = window.innerWidth - width;
-  centery = window.innerHeight - height;
+  gapx = window.innerWidth - width;
+  gapy = window.innerHeight - height;
 
-  context.drawImage(video, centerx * 0.5, centery * 0.5, width, height);
+  context.drawImage(video, gapx * 0.5, gapy * 0.5, width, height);
   context.restore();
 
   let hands: Hand[];
