@@ -166,12 +166,21 @@ export const detectVideoAnimation = async (
         const ty = thumb.y / deviceRatio;
         const ifx = indexFinger.x / deviceRatio;
         const ify = indexFinger.y / deviceRatio;
+        const centerx = tx < ifx ? tx + (ifx - tx) / 2 : ifx + (tx - ifx) / 2;
+        const centery = ty < ify ? ty + (ify - ty) / 2 : ify + (ty - ify) / 2;
 
         const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
 
         context.save();
         context.beginPath();
         context.translate(tx, ty);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.stroke();
+        context.restore();
+
+        context.save();
+        context.beginPath();
+        context.translate(centerx, centery);
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.fill();
         context.restore();
@@ -180,12 +189,12 @@ export const detectVideoAnimation = async (
         context.beginPath();
         context.translate(ifx, ify);
         context.arc(0, 0, 10, 0, Math.PI * 2);
-        context.fill();
+        context.stroke();
         context.restore();
 
         if (dd < 50) {
           if (hand === 'Left') {
-            circles.push({ x: tx, y: ty });
+            circles.push({ x: centerx, y: centery });
           } else if (hand === 'Right') {
             circles = [];
           }
