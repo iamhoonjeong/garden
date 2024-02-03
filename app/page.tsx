@@ -1,11 +1,6 @@
 'use client';
 import { useRef, useEffect } from 'react';
-import {
-  canvasSizeAdjustment,
-  canvasAnimation,
-  drawingCircles,
-  addCircle,
-} from '@/lib/canvas';
+import { canvasSizeAdjustment, canvasAnimation, drawingCircles, addCircle } from '@/lib/canvas';
 import { Circle } from '@/types/canvas';
 
 export default function Home() {

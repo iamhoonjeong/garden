@@ -76,10 +76,7 @@ export const drawingCircles = (
   }
 };
 
-export const addCircle = async (
-  e: MouseEvent | TouchEvent,
-  circles: Circle[],
-) => {
+export const addCircle = async (e: MouseEvent | TouchEvent, circles: Circle[]) => {
   if (e instanceof TouchEvent) {
     circles.push({
       x: e.touches[0].clientX,
@@ -131,8 +128,7 @@ export const detectVideoAnimation = async (
     height = width * (video.clientHeight / video.clientWidth);
 
     if (height < window.innerHeight) {
-      imageGapPercent =
-        imageGapPercent + (window.innerHeight - height) / height;
+      imageGapPercent = imageGapPercent + (window.innerHeight - height) / height;
       width = width * imageGapPercent;
       height = height * imageGapPercent;
     }

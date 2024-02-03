@@ -46,10 +46,7 @@ export default function Hand() {
     detectVideoAnimation(canvas, context, video, detector, circles);
   }, [detector]);
 
-  const videoPlay = (
-    video: HTMLVideoElement,
-    constraints: MediaStreamConstraints,
-  ) => {
+  const videoPlay = (video: HTMLVideoElement, constraints: MediaStreamConstraints) => {
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then((mediaStream) => {
