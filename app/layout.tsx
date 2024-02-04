@@ -10,8 +10,9 @@ export const metadata: Metadata = {
 
 const lora = Lora({
   weight: '700',
-  subsets: ['latin'],
   style: 'italic',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

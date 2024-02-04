@@ -16,21 +16,20 @@ body {
 
 .navigation {
   position: fixed;
-  height: 40px;
   top: 0;
   left: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .navigation > ul {
   display: flex;
+  flex-direction: column;
+  padding-left: 16px;
 }
 
 .navigation > ul > li {
-  margin-left: 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
   list-style-type: none;
 }
 
@@ -61,4 +60,27 @@ body {
 
 .construction > div {
   display: inline-block;
+}
+
+.pinch-stop-watch {
+  position: fixed;
+  left: 50%;
+  width: 240px;
+  height: 40px;
+  transform: translateX(-120px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pinch-score {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  width: 240px;
+  height: 40px;
+  transform: translateX(-120px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

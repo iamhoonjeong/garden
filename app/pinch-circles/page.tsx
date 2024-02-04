@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { HandDetector } from '@tensorflow-models/hand-pose-detection';
-import { canvasSizeAdjustment, drawingWithHandAnimation } from '@/lib/canvas';
+import { canvasSizeAdjustment, pinchCirclesAnimation } from '@/lib/canvas';
 import { createTensorflowDetector } from '@/lib/tensorflow';
 
 export default function Hand() {
@@ -43,7 +43,7 @@ export default function Hand() {
     };
 
     videoPlay(video, videoConstraints);
-    drawingWithHandAnimation(canvas, context, video, detector, circles);
+    pinchCirclesAnimation(canvas, context, video, detector, circles);
   }, [detector]);
 
   const videoPlay = (video: HTMLVideoElement, constraints: MediaStreamConstraints) => {
@@ -60,8 +60,10 @@ export default function Hand() {
 
   return (
     <main className="container">
+      <div className="pinch-stop-watch">00:53:22</div>
       <canvas ref={canvasRef}></canvas>
       <video ref={videoRef} playsInline={true} muted={true}></video>
+      <div className="pinch-score">16/50</div>
     </main>
   );
 }

@@ -102,7 +102,7 @@ export const addCircle = async (e: MouseEvent | TouchEvent, circles: Circle[]) =
   }
 };
 
-export const detectVideoAnimation = async (
+export const pinchCirclesAnimation = async (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   video: HTMLVideoElement,
@@ -212,7 +212,125 @@ export const detectVideoAnimation = async (
   }
 
   const animationId = requestAnimationFrame(() =>
-    detectVideoAnimation(canvas, context, video, detector, circles),
+    pinchCirclesAnimation(canvas, context, video, detector, circles),
+  );
+  if (window.location.pathname !== '/pinch-circles') {
+    cancelAnimationFrame(animationId);
+    detector.dispose();
+  }
+};
+
+export const drawingWithHandAnimation = async (
+  canvas: HTMLCanvasElement,
+  context: CanvasRenderingContext2D,
+  video: HTMLVideoElement,
+  detector: HandDetector,
+  circles: { x: number; y: number }[],
+) => {
+  if (!detector) return;
+
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  let deviceRatio = window.devicePixelRatio;
+  let imageGapPercent = 1;
+  let gapx = 0;
+  let gapy = 0;
+
+  context.clearRect(0, 0, width, height);
+  context.save();
+  context.translate(width, 0);
+  context.scale(-1, 1);
+
+  if (width > height) {
+    width = window.innerWidth;
+    height = width * (video.clientHeight / video.clientWidth);
+
+    if (height < window.innerHeight) {
+      imageGapPercent = imageGapPercent + (window.innerHeight - height) / height;
+      width = width * imageGapPercent;
+      height = height * imageGapPercent;
+    }
+  } else if (width < height) {
+    width = height * (video.clientWidth / video.clientHeight);
+    height = window.innerHeight;
+
+    if (width < window.innerWidth) {
+      imageGapPercent = imageGapPercent + (window.innerWidth - width) / width;
+      width = width * imageGapPercent;
+      height = height * imageGapPercent;
+    }
+  }
+
+  gapx = window.innerWidth - width;
+  gapy = window.innerHeight - height;
+
+  context.drawImage(video, gapx * 0.5, gapy * 0.5, width, height);
+  context.restore();
+
+  let hands: Hand[];
+  try {
+    hands = await detector.estimateHands(canvas);
+    if (hands.length) {
+      for (let i = 0; i < hands.length; i++) {
+        const hand = hands[i].handedness;
+        const thumb = hands[i].keypoints[4];
+        const indexFinger = hands[i].keypoints[8];
+
+        const tx = thumb.x / deviceRatio;
+        const ty = thumb.y / deviceRatio;
+        const ifx = indexFinger.x / deviceRatio;
+        const ify = indexFinger.y / deviceRatio;
+        const centerx = tx < ifx ? tx + (ifx - tx) / 2 : ifx + (tx - ifx) / 2;
+        const centery = ty < ify ? ty + (ify - ty) / 2 : ify + (ty - ify) / 2;
+
+        const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
+
+        context.save();
+        context.beginPath();
+        context.translate(tx, ty);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.stroke();
+        context.restore();
+
+        context.save();
+        context.beginPath();
+        context.translate(centerx, centery);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.fill();
+        context.restore();
+
+        context.save();
+        context.beginPath();
+        context.translate(ifx, ify);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.stroke();
+        context.restore();
+
+        if (dd < 50) {
+          if (hand === 'Left') {
+            circles.push({ x: centerx, y: centery });
+          } else if (hand === 'Right') {
+            circles = [];
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < circles.length; i++) {
+      context.save();
+      context.translate(circles[i].x, circles[i].y);
+      context.beginPath();
+      context.arc(0, 0, 20, 0, Math.PI * 2);
+      context.fill();
+      context.restore();
+    }
+  } catch (error) {
+    detector.dispose();
+    console.error(error);
+  }
+
+  const animationId = requestAnimationFrame(() =>
+    drawingWithHandAnimation(canvas, context, video, detector, circles),
   );
   if (window.location.pathname !== '/drawing-with-hand') {
     cancelAnimationFrame(animationId);
