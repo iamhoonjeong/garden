@@ -6,3 +6,4 @@
 2. Adjust canvas frame
 3. Canvas resizing function when screen size changes
 4. Improve drawing with hand interaction
+5. Decrease pinch circles score

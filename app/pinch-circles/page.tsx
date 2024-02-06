@@ -8,6 +8,9 @@ export default function Hand() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [detector, setDetector] = useState<HandDetector>();
+  const [time, setTime] = useState(3000);
+  const [stopTime, setStopTime] = useState(false);
+  const [circleCount, setCircleCount] = useState(12);
 
   let circles: { x: number; y: number }[] = [];
 
@@ -58,12 +61,36 @@ export default function Hand() {
       .catch((error) => console.error(error));
   };
 
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    if (!stopTime) {
+      intervalId = setInterval(() => setTime(time - 1), 10);
+    }
+
+    if (time === 0) {
+      setStopTime(true);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [time, stopTime]);
+
+  const minutes = Math.floor((time % 360000) / 6000);
+  const seconds = Math.floor((time % 6000) / 100);
+  const milliseconds = time % 100;
+
   return (
     <main className="container">
-      <div className="pinch-stop-watch">00:53:22</div>
+      <div className="pinch-stop-watch">
+        <span>{minutes.toString().padStart(2, '0')}</span>:
+        <span>{seconds.toString().padStart(2, '0')}</span>:
+        <span className="pinch-stop-watch-milliseconds">
+          {milliseconds.toString().padStart(2, '0')}
+        </span>
+      </div>
       <canvas ref={canvasRef}></canvas>
       <video ref={videoRef} playsInline={true} muted={true}></video>
-      <div className="pinch-score">16/50</div>
+      <div className="pinch-score">{circleCount}/50</div>
     </main>
   );
 }
