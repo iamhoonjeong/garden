@@ -107,7 +107,7 @@ export const pinchCirclesAnimation = async (
   context: CanvasRenderingContext2D,
   video: HTMLVideoElement,
   detector: HandDetector,
-  circles: { x: number; y: number }[],
+  circles: Circle[],
 ) => {
   if (!detector) return;
 
@@ -190,7 +190,7 @@ export const pinchCirclesAnimation = async (
 
         if (dd < 50) {
           if (hand === 'Left') {
-            circles.push({ x: centerx, y: centery });
+            // circles.push({ x: centerx, y: centery });
           } else if (hand === 'Right') {
             circles = [];
           }
@@ -202,7 +202,7 @@ export const pinchCirclesAnimation = async (
       context.save();
       context.translate(circles[i].x, circles[i].y);
       context.beginPath();
-      context.arc(0, 0, 20, 0, Math.PI * 2);
+      context.arc(0, 0, 40, 0, Math.PI * 2);
       context.fill();
       context.restore();
     }

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { HandDetector } from '@tensorflow-models/hand-pose-detection';
 import { canvasSizeAdjustment, pinchCirclesAnimation } from '@/lib/canvas';
 import { createTensorflowDetector } from '@/lib/tensorflow';
+import { Circle } from '@/types/canvas';
 
 export default function Hand() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -12,7 +13,11 @@ export default function Hand() {
   const [stopTime, setStopTime] = useState(false);
   const [circleCount, setCircleCount] = useState(12);
 
-  let circles: { x: number; y: number }[] = [];
+  let circles: Circle[] = [];
+
+  const randomNumber = (min: number, max: number) => {
+    return Math.random() * (max - min) + min;
+  };
 
   const getDetector = async () => {
     try {
@@ -33,6 +38,20 @@ export default function Hand() {
     if (!videoRef.current) return;
     if (!canvasRef.current) return;
     if (!detector) return;
+
+    // will change - static radius value in x, y
+    for (let i = 0; i < 50; i++) {
+      circles.push({
+        x: randomNumber(40, window.innerWidth - 40),
+        y: randomNumber(40, window.innerHeight - 40),
+        ax: 0,
+        ay: 0,
+        ix: 0,
+        iy: 0,
+        vx: 0,
+        vy: 0,
+      });
+    }
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
