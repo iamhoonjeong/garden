@@ -14,6 +14,40 @@ body {
   overflow: hidden;
 }
 
+.hand-image-container {
+  display: flex;
+  flex-direction: column;
+  background: none;
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+
+  p {
+    padding-left: 8px;
+    line-height: 24px;
+
+    span {
+      font-size: 20px;
+    }
+  }
+}
+
+.left-hand-container {
+  margin-top: 200px;
+  padding-left: 8px;
+  display: flex;
+}
+
+.right-hand-container {
+  margin-top: 200px;
+  padding-right: 10px;
+  display: flex;
+}
+
+.right-hand {
+  transform: scaleX(-1);
+}
+
 .navigation {
   position: fixed;
   top: 0;

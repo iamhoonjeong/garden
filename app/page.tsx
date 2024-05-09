@@ -1,5 +1,6 @@
 'use client';
 import { useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { canvasSizeAdjustment, canvasAnimation, drawingCircles, addCircle } from '@/lib/canvas';
 import { Circle } from '@/types/canvas';
 
@@ -66,6 +67,36 @@ export default function Home() {
 
   return (
     <main className="container">
+      <div className="hand-image-container">
+        <div className="left-hand-container">
+          <Image
+            className="left-hand"
+            src={`/images/hand.svg`}
+            alt={'left-hand image'}
+            width="80"
+            height="80"
+          />
+          <p>
+            <span>Using Left Hand</span>
+            <br />
+            Drawing something
+          </p>
+        </div>
+        <div className="right-hand-container">
+          <Image
+            className="right-hand"
+            src={`/images/hand.svg`}
+            alt={'right-hand image'}
+            width="80"
+            height="80"
+          />
+          <p>
+            <span>Using Right Hand</span>
+            <br />
+            Erase everything
+          </p>
+        </div>
+      </div>
       {process.env.NEXT_PUBLIC_CONSTRUCTION === 'true' && (
         <div className="construction">
           <div>UNDER CONSTRUCTION</div>
