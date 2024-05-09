@@ -8,16 +8,21 @@ export default function Navigation() {
   return (
     <nav className="navigation">
       <ul>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
+        {pathname !== '/' && (
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+        )}
         {pathname === '/' && (
           <>
-            <li>
+            {/* <li>
               <Link href="/pinch-circles">Pinch Circles</Link>
             </li>
             <li>
               <Link href="/drawing-with-hand">Drawing with Hand</Link>
+            </li> */}
+            <li>
+              <Link href="/shaking-rainbows">Shaking Rainbows</Link>
             </li>
           </>
         )}
