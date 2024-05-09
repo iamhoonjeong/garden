@@ -455,6 +455,16 @@ export const shakingRainbowsAnimation = async (
       }
     }
 
+    if (circles.length === 1) {
+      context.save();
+      context.beginPath();
+      context.translate(0, 0);
+      context.arc(circles[0].x, circles[0].y, 15, 0, Math.PI * 2);
+      context.fillStyle = '#ed0100';
+      context.fill();
+      context.restore();
+    }
+
     for (let i = 1; i < circles.length; i++) {
       const previous = circles[i - 1];
       const current = circles[i];
