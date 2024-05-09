@@ -414,7 +414,7 @@ export const shakingRainbowsAnimation = async (
         context.save();
         context.beginPath();
         context.translate(centerx, centery);
-        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.arc(0, 0, 5, 0, Math.PI * 2);
         context.fill();
         context.restore();
 
@@ -498,6 +498,153 @@ export const shakingRainbowsAnimation = async (
     shakingRainbowsAnimation(canvas, context, video, detector, circles, allowClick),
   );
   if (window.location.pathname !== '/shaking-rainbows') {
+    cancelAnimationFrame(animationId);
+    detector.dispose();
+  }
+};
+
+export const bubbleBubbleAnimation = async (
+  canvas: HTMLCanvasElement,
+  context: CanvasRenderingContext2D,
+  video: HTMLVideoElement,
+  detector: HandDetector,
+  circles: { size: number; x: number; y: number; accx: number; accy: number; angle: number }[],
+) => {
+  if (!detector) return;
+
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  let deviceRatio = window.devicePixelRatio;
+  let imageGapPercent = 1;
+  let gapx = 0;
+  let gapy = 0;
+
+  context.clearRect(0, 0, width, height);
+  context.save();
+  context.translate(width, 0);
+  context.scale(-1, 1);
+
+  if (width > height) {
+    width = window.innerWidth;
+    height = width * (video.clientHeight / video.clientWidth);
+
+    if (height < window.innerHeight) {
+      imageGapPercent = imageGapPercent + (window.innerHeight - height) / height;
+      width = width * imageGapPercent;
+      height = height * imageGapPercent;
+    }
+  } else if (width < height) {
+    width = height * (video.clientWidth / video.clientHeight);
+    height = window.innerHeight;
+
+    if (width < window.innerWidth) {
+      imageGapPercent = imageGapPercent + (window.innerWidth - width) / width;
+      width = width * imageGapPercent;
+      height = height * imageGapPercent;
+    }
+  }
+
+  gapx = window.innerWidth - width;
+  gapy = window.innerHeight - height;
+
+  context.drawImage(video, gapx * 0.5, gapy * 0.5, width, height);
+  context.restore();
+
+  let hands: Hand[];
+  try {
+    hands = await detector.estimateHands(canvas);
+    if (hands.length) {
+      for (let i = 0; i < hands.length; i++) {
+        const hand = hands[i].handedness;
+        const thumb = hands[i].keypoints[4];
+        const indexFinger = hands[i].keypoints[8];
+
+        const tx = thumb.x / deviceRatio;
+        const ty = thumb.y / deviceRatio;
+        const ifx = indexFinger.x / deviceRatio;
+        const ify = indexFinger.y / deviceRatio;
+        const centerx = tx < ifx ? tx + (ifx - tx) / 2 : ifx + (tx - ifx) / 2;
+        const centery = ty < ify ? ty + (ify - ty) / 2 : ify + (ty - ify) / 2;
+
+        const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
+
+        context.save();
+        context.beginPath();
+        context.translate(tx, ty);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.stroke();
+        context.restore();
+
+        context.save();
+        context.beginPath();
+        context.translate(centerx, centery);
+        context.arc(0, 0, 5, 0, Math.PI * 2);
+        context.fill();
+        context.restore();
+
+        context.save();
+        context.beginPath();
+        context.translate(ifx, ify);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.stroke();
+        context.restore();
+
+        if (dd < 50) {
+          if (hand === 'Left') {
+            circles.push({
+              size: Math.random() * 40 + 20,
+              x: centerx,
+              y: centery,
+              accx: Math.random() * 500 + 1,
+              accy: Math.random() * 3 + 1,
+              angle: Math.random() * 360,
+            });
+          } else if (hand === 'Right') {
+            circles = [];
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < circles.length; i++) {
+      context.save();
+      context.translate(circles[i].x, circles[i].y);
+      context.beginPath();
+
+      context.arc(0, 0, circles[i].size, 0, Math.PI * 2);
+      context.rotate((circles[i].angle * Math.PI) / 180);
+      context.strokeStyle = 'red';
+      context.lineWidth = 30;
+      context.lineCap = 'round';
+
+      const gradient = context.createRadialGradient(
+        circles[i].size / 2,
+        circles[i].size / 2,
+        circles[i].size / 2,
+        circles[i].size,
+        circles[i].size,
+        circles[i].size * 2,
+      );
+      gradient.addColorStop(0, '#9EADFE');
+      gradient.addColorStop(1, '#3F20FF');
+      context.globalAlpha = 0.8;
+      context.fillStyle = gradient;
+      context.fill();
+      circles[i].angle += 0.5;
+
+      circles[i].x += Math.sin(3 * circles[i].accx);
+      circles[i].y -= circles[i].accy;
+      context.restore();
+    }
+  } catch (error) {
+    detector.dispose();
+    console.error(error);
+  }
+
+  const animationId = requestAnimationFrame(() =>
+    bubbleBubbleAnimation(canvas, context, video, detector, circles),
+  );
+  if (window.location.pathname !== '/bubble-bubble') {
     cancelAnimationFrame(animationId);
     detector.dispose();
   }

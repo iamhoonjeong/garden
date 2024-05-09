@@ -32,6 +32,16 @@ export default function Navigation() {
                 height="20"
               />
             </li>
+            <li>
+              <Link href="/bubble-bubble">Bubble Bubble</Link>
+              <Image
+                className="arrow-icon"
+                src={`/images/arrow.svg`}
+                alt={'arrow icon'}
+                width="20"
+                height="20"
+              />
+            </li>
           </>
         )}
       </ul>
