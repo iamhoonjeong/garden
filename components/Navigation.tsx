@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
@@ -23,6 +24,13 @@ export default function Navigation() {
             </li> */}
             <li>
               <Link href="/shaking-rainbows">Shaking Rainbows</Link>
+              <Image
+                className="arrow-icon"
+                src={`/images/arrow.svg`}
+                alt={'arrow icon'}
+                width="20"
+                height="20"
+              />
             </li>
           </>
         )}

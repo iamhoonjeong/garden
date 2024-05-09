@@ -1,6 +1,7 @@
 'use client';
 import { useRef, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { canvasSizeAdjustment, canvasAnimation, drawingCircles, addCircle } from '@/lib/canvas';
 import { Circle } from '@/types/canvas';
 
@@ -52,8 +53,10 @@ export default function Home() {
   };
 
   const onMouseMove = (e: MouseEvent) => {
+    console.log(e);
     cursor.x = e.offsetX;
     cursor.y = e.offsetY;
+    console.log(cursor.x, cursor.y);
     addCircle(e, circles);
   };
 
@@ -77,9 +80,9 @@ export default function Home() {
             height="80"
           />
           <p>
-            <span>Using Left Hand</span>
+            <span>Left Hand</span>
             <br />
-            Drawing something
+            Draw something
           </p>
         </div>
         <div className="right-hand-container">
@@ -91,12 +94,17 @@ export default function Home() {
             height="80"
           />
           <p>
-            <span>Using Right Hand</span>
+            <span>Right Hand</span>
             <br />
             Erase everything
           </p>
         </div>
       </div>
+      <nav className="icons">
+        <Link href="https://www.linkedin.com/in/iamhoonjeong" target="_blank">
+          <Image src={`/images/linkedin-icon.svg`} alt={'linkedin icon'} width="24" height="24" />
+        </Link>
+      </nav>
       <canvas ref={canvasRef}></canvas>
     </main>
   );

@@ -90,10 +90,10 @@ export const addCircle = async (e: MouseEvent | TouchEvent, circles: Circle[]) =
     });
   } else {
     circles.push({
-      x: e.offsetX,
-      y: e.offsetY,
-      ix: e.offsetX,
-      iy: e.offsetY,
+      x: e.clientX,
+      y: e.clientY,
+      ix: e.clientX,
+      iy: e.clientY,
       ax: 0.1,
       ay: 0.1,
       vx: 0,
