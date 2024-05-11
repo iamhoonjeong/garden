@@ -136,6 +136,14 @@ body {
   animation-iteration-count: infinite;
 }
 
+.arrow-icon2 {
+  margin-left: 8px;
+  animation-name: animate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  transform: scaleX(-1);
+}
+
 @keyframes animate {
   from {
     margin-left: 24px;
@@ -145,13 +153,60 @@ body {
   }
 }
 
+.demonstration {
+  animation-name: opacity;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  display: flex;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  a {
+    display: flex;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    height: 24px;
+  }
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .icons {
+  display: flex;
   position: fixed;
   bottom: 20px;
   left: 20px;
 
   a {
     display: flex;
+  }
+}
+
+.icons-2 {
+  display: flex;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  a {
+    display: flex;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    height: 24px;
   }
 }
 

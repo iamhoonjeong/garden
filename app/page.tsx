@@ -98,11 +98,16 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <nav className="icons">
+      <div className="icons">
         <Link href="https://www.linkedin.com/in/iamhoonjeong" target="_blank">
           <Image src={`/images/linkedin-icon.svg`} alt={'linkedin icon'} width="24" height="24" />
         </Link>
-      </nav>
+      </div>
+      <div className="demonstration">
+        <Link href="https://youtu.be/-tW5h_1O_H8" target="_blank">
+          <div>Demonstration Video</div>
+        </Link>
+      </div>
       <canvas ref={canvasRef}></canvas>
     </main>
   );
