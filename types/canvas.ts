@@ -4,6 +4,8 @@ export type Cursor = {
 };
 
 export type Circle = {
+  radious?: number;
+
   x: number;
   y: number;
 

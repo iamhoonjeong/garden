@@ -196,12 +196,9 @@ export const catchBallsIfYouCanAnimation = async (
                   (circles[i].y - centery) * (circles[i].y - centery),
               );
               if (dd < 50) {
-                console.log(circles[i], i);
                 circles.splice(i, 1);
               }
             }
-
-            // circles.push({ x: centerx, y: centery });
           } else if (hand === 'Right') {
             circles = [];
           }
@@ -210,16 +207,47 @@ export const catchBallsIfYouCanAnimation = async (
     }
 
     for (let i = 0; i < circles.length; i++) {
+      let color = '';
+      if (i % 7 === 0) {
+        color = '#ed0100';
+      } else if (i % 7 === 1) {
+        color = '#ec8601';
+      } else if (i % 7 === 2) {
+        color = '#f4ea02';
+      } else if (i % 7 === 3) {
+        color = '#1ee700';
+      } else if (i % 7 === 4) {
+        color = '#2100e4';
+      } else if (i % 7 === 5) {
+        color = '#a400e1';
+      } else if (i % 7 === 6) {
+        color = '#c07bff';
+      }
+
       context.save();
       context.translate(circles[i].x, circles[i].y);
       context.beginPath();
-      context.arc(0, 0, 40, 0, Math.PI * 2);
+      context.arc(0, 0, circles[i].radious ?? 20, 0, Math.PI * 2);
+      context.globalAlpha = 0.9;
+
+      context.fillStyle = color;
       context.fill();
       context.restore();
 
       // moving
-      // circles[i].x += circles[i].ax;
-      // circles[i].y += circles[i].ay;
+      circles[i].x += circles[i].ax;
+      circles[i].y += circles[i].ay;
+
+      if (
+        circles[i].x >= window.innerWidth - (circles[i].radious ?? 20) ||
+        circles[i].x <= 0 + (circles[i].radious ?? 20)
+      )
+        circles[i].ax *= -1;
+      if (
+        circles[i].y >= window.innerHeight - (circles[i].radious ?? 20) ||
+        circles[i].y <= 0 + (circles[i].radious ?? 20)
+      )
+        circles[i].ay *= -1;
     }
   } catch (error) {
     detector.dispose();

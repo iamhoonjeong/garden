@@ -9,9 +9,6 @@ export default function Hand() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [detector, setDetector] = useState<HandDetector>();
-  const [time, setTime] = useState(3000);
-  const [stopTime, setStopTime] = useState(false);
-  const [circleCount, setCircleCount] = useState(12);
 
   let circles: Circle[] = [];
 
@@ -40,12 +37,14 @@ export default function Hand() {
     if (!detector) return;
 
     // will change - static radius value in x, y
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
+      let radious = randomNumber(60, 120);
       circles.push({
-        x: randomNumber(40, window.innerWidth - 40),
-        y: randomNumber(40, window.innerHeight - 40),
-        ax: 1,
-        ay: 1,
+        radious,
+        x: randomNumber(radious, window.innerWidth - radious),
+        y: randomNumber(radious, window.innerHeight - radious),
+        ax: randomNumber(1, 8),
+        ay: randomNumber(1, 8),
         ix: 0,
         iy: 0,
         vx: 0,
@@ -85,7 +84,6 @@ export default function Hand() {
       <div className="pinch-stop-watch"></div>
       <canvas ref={canvasRef}></canvas>
       <video ref={videoRef} playsInline={true} muted={true}></video>
-      <div className="pinch-score">{circleCount}/50</div>
     </main>
   );
 }
