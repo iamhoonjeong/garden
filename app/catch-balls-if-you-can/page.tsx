@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { HandDetector } from '@tensorflow-models/hand-pose-detection';
-import { canvasSizeAdjustment, pinchCirclesAnimation } from '@/lib/canvas';
+import { canvasSizeAdjustment, catchBallsIfYouCanAnimation } from '@/lib/canvas';
 import { createTensorflowDetector } from '@/lib/tensorflow';
 import { Circle } from '@/types/canvas';
 
@@ -44,8 +44,8 @@ export default function Hand() {
       circles.push({
         x: randomNumber(40, window.innerWidth - 40),
         y: randomNumber(40, window.innerHeight - 40),
-        ax: 0,
-        ay: 0,
+        ax: 1,
+        ay: 1,
         ix: 0,
         iy: 0,
         vx: 0,
@@ -65,7 +65,7 @@ export default function Hand() {
     };
 
     videoPlay(video, videoConstraints);
-    pinchCirclesAnimation(canvas, context, video, detector, circles);
+    catchBallsIfYouCanAnimation(canvas, context, video, detector, circles);
   }, [detector]);
 
   const videoPlay = (video: HTMLVideoElement, constraints: MediaStreamConstraints) => {
@@ -80,33 +80,9 @@ export default function Hand() {
       .catch((error) => console.error(error));
   };
 
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-
-    if (!stopTime) {
-      intervalId = setInterval(() => setTime(time - 1), 10);
-    }
-
-    if (time === 0) {
-      setStopTime(true);
-    }
-
-    return () => clearInterval(intervalId);
-  }, [time, stopTime]);
-
-  const minutes = Math.floor((time % 360000) / 6000);
-  const seconds = Math.floor((time % 6000) / 100);
-  const milliseconds = time % 100;
-
   return (
     <main className="container">
-      <div className="pinch-stop-watch">
-        <span>{minutes.toString().padStart(2, '0')}</span>:
-        <span>{seconds.toString().padStart(2, '0')}</span>:
-        <span className="pinch-stop-watch-milliseconds">
-          {milliseconds.toString().padStart(2, '0')}
-        </span>
-      </div>
+      <div className="pinch-stop-watch"></div>
       <canvas ref={canvasRef}></canvas>
       <video ref={videoRef} playsInline={true} muted={true}></video>
       <div className="pinch-score">{circleCount}/50</div>

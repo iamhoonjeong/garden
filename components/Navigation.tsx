@@ -42,6 +42,16 @@ export default function Navigation() {
                 height="20"
               />
             </li>
+            <li>
+              <Link href="/catch-balls-if-you-can">Catch balls if you can</Link>
+              <Image
+                className="arrow-icon"
+                src={`/images/arrow.svg`}
+                alt={'arrow icon'}
+                width="20"
+                height="20"
+              />
+            </li>
           </>
         )}
       </ul>

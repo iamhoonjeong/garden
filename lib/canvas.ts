@@ -102,7 +102,7 @@ export const addCircle = async (e: MouseEvent | TouchEvent, circles: Circle[]) =
   }
 };
 
-export const pinchCirclesAnimation = async (
+export const catchBallsIfYouCanAnimation = async (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   video: HTMLVideoElement,
@@ -190,6 +190,17 @@ export const pinchCirclesAnimation = async (
 
         if (dd < 50) {
           if (hand === 'Left') {
+            for (let i = 0; i < circles.length; i++) {
+              const dd = Math.sqrt(
+                (circles[i].x - centerx) * (circles[i].x - centerx) +
+                  (circles[i].y - centery) * (circles[i].y - centery),
+              );
+              if (dd < 50) {
+                console.log(circles[i], i);
+                circles.splice(i, 1);
+              }
+            }
+
             // circles.push({ x: centerx, y: centery });
           } else if (hand === 'Right') {
             circles = [];
@@ -205,6 +216,10 @@ export const pinchCirclesAnimation = async (
       context.arc(0, 0, 40, 0, Math.PI * 2);
       context.fill();
       context.restore();
+
+      // moving
+      // circles[i].x += circles[i].ax;
+      // circles[i].y += circles[i].ay;
     }
   } catch (error) {
     detector.dispose();
@@ -212,9 +227,9 @@ export const pinchCirclesAnimation = async (
   }
 
   const animationId = requestAnimationFrame(() =>
-    pinchCirclesAnimation(canvas, context, video, detector, circles),
+    catchBallsIfYouCanAnimation(canvas, context, video, detector, circles),
   );
-  if (window.location.pathname !== '/pinch-circles') {
+  if (window.location.pathname !== '/catch-balls-if-you-can') {
     cancelAnimationFrame(animationId);
     detector.dispose();
   }
