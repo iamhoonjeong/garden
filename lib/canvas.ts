@@ -167,26 +167,26 @@ export const catchBallsIfYouCanAnimation = async (
 
         const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
 
-        context.save();
+        /* context.save();
         context.beginPath();
         context.translate(tx, ty);
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.stroke();
         context.restore();
 
-        // context.save();
-        // context.beginPath();
-        // context.translate(centerx, centery);
-        // context.arc(0, 0, 10, 0, Math.PI * 2);
-        // context.fill();
-        // context.restore();
+        context.save();
+        context.beginPath();
+        context.translate(centerx, centery);
+        context.arc(0, 0, 10, 0, Math.PI * 2);
+        context.fill();
+        context.restore();
 
         context.save();
         context.beginPath();
         context.translate(ifx, ify);
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.stroke();
-        context.restore();
+        context.restore(); */
 
         if (dd < 50) {
           if (hand === 'Left') {
@@ -447,7 +447,7 @@ export const shakingRainbowsAnimation = async (
 
         const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
 
-        context.save();
+        /* context.save();
         context.beginPath();
         context.translate(tx, ty);
         context.arc(0, 0, 10, 0, Math.PI * 2);
@@ -466,7 +466,7 @@ export const shakingRainbowsAnimation = async (
         context.translate(ifx, ify);
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.stroke();
-        context.restore();
+        context.restore(); */
 
         if (dd < 50) {
           if (hand === 'Left' && allowClick) {
@@ -611,7 +611,7 @@ export const bubbleBubbleAnimation = async (
 
         const dd = Math.sqrt((tx - ifx) * (tx - ifx) + (ty - ify) * (ty - ify));
 
-        context.save();
+        /* context.save();
         context.beginPath();
         context.translate(tx, ty);
         context.arc(0, 0, 10, 0, Math.PI * 2);
@@ -630,7 +630,7 @@ export const bubbleBubbleAnimation = async (
         context.translate(ifx, ify);
         context.arc(0, 0, 10, 0, Math.PI * 2);
         context.stroke();
-        context.restore();
+        context.restore(); */
 
         if (dd < 50) {
           if (hand === 'Left') {

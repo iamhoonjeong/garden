@@ -80,7 +80,7 @@ export default function Home() {
           <p>
             <span>Left Hand</span>
             <br />
-            Draw something
+            Pinch! see what happens.
           </p>
         </div>
         <div className="right-hand-container">

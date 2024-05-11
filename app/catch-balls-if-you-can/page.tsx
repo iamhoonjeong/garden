@@ -135,7 +135,7 @@ export default function Hand() {
     <main className="container">
       <div className="pinch-stop-watch"></div>
       <div className="resume" onClick={onResumeBalls}>
-        Resume Balls
+        Reset Balls
       </div>
       <canvas ref={canvasRef}></canvas>
       <video ref={videoRef} playsInline={true} muted={true}></video>
