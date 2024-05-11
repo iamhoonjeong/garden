@@ -36,20 +36,36 @@ export default function Hand() {
     if (!canvasRef.current) return;
     if (!detector) return;
 
-    // will change - static radius value in x, y
-    for (let i = 0; i < 30; i++) {
-      let radious = randomNumber(60, 120);
-      circles.push({
-        radious,
-        x: randomNumber(radious, window.innerWidth - radious),
-        y: randomNumber(radious, window.innerHeight - radious),
-        ax: randomNumber(1, 8),
-        ay: randomNumber(1, 8),
-        ix: 0,
-        iy: 0,
-        vx: 0,
-        vy: 0,
-      });
+    if (window.innerWidth < 600) {
+      for (let i = 0; i < 30; i++) {
+        let radious = randomNumber(20, 60);
+        circles.push({
+          radious,
+          x: randomNumber(radious, window.innerWidth - radious),
+          y: randomNumber(radious, window.innerHeight - radious),
+          ax: randomNumber(1, 8),
+          ay: randomNumber(1, 8),
+          ix: 0,
+          iy: 0,
+          vx: 0,
+          vy: 0,
+        });
+      }
+    } else {
+      for (let i = 0; i < 30; i++) {
+        let radious = randomNumber(60, 120);
+        circles.push({
+          radious,
+          x: randomNumber(radious, window.innerWidth - radious),
+          y: randomNumber(radious, window.innerHeight - radious),
+          ax: randomNumber(1, 8),
+          ay: randomNumber(1, 8),
+          ix: 0,
+          iy: 0,
+          vx: 0,
+          vy: 0,
+        });
+      }
     }
 
     const video = videoRef.current;
@@ -79,9 +95,48 @@ export default function Hand() {
       .catch((error) => console.error(error));
   };
 
+  const onResumeBalls = () => {
+    circles.splice(0, circles.length);
+
+    if (window.innerWidth < 600) {
+      for (let i = 0; i < 30; i++) {
+        let radious = randomNumber(20, 60);
+        circles.push({
+          radious,
+          x: randomNumber(radious, window.innerWidth - radious),
+          y: randomNumber(radious, window.innerHeight - radious),
+          ax: randomNumber(1, 8),
+          ay: randomNumber(1, 8),
+          ix: 0,
+          iy: 0,
+          vx: 0,
+          vy: 0,
+        });
+      }
+    } else {
+      for (let i = 0; i < 30; i++) {
+        let radious = randomNumber(60, 120);
+        circles.push({
+          radious,
+          x: randomNumber(radious, window.innerWidth - radious),
+          y: randomNumber(radious, window.innerHeight - radious),
+          ax: randomNumber(1, 8),
+          ay: randomNumber(1, 8),
+          ix: 0,
+          iy: 0,
+          vx: 0,
+          vy: 0,
+        });
+      }
+    }
+  };
+
   return (
     <main className="container">
       <div className="pinch-stop-watch"></div>
+      <div className="resume" onClick={onResumeBalls}>
+        Resume Balls
+      </div>
       <canvas ref={canvasRef}></canvas>
       <video ref={videoRef} playsInline={true} muted={true}></video>
     </main>

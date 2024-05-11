@@ -174,12 +174,12 @@ export const catchBallsIfYouCanAnimation = async (
         context.stroke();
         context.restore();
 
-        context.save();
-        context.beginPath();
-        context.translate(centerx, centery);
-        context.arc(0, 0, 10, 0, Math.PI * 2);
-        context.fill();
-        context.restore();
+        // context.save();
+        // context.beginPath();
+        // context.translate(centerx, centery);
+        // context.arc(0, 0, 10, 0, Math.PI * 2);
+        // context.fill();
+        // context.restore();
 
         context.save();
         context.beginPath();
@@ -200,7 +200,7 @@ export const catchBallsIfYouCanAnimation = async (
               }
             }
           } else if (hand === 'Right') {
-            circles = [];
+            circles.splice(0, circles.length);
           }
         }
       }

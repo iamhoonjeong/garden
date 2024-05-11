@@ -53,10 +53,8 @@ export default function Home() {
   };
 
   const onMouseMove = (e: MouseEvent) => {
-    console.log(e);
     cursor.x = e.offsetX;
     cursor.y = e.offsetY;
-    console.log(cursor.x, cursor.y);
     addCircle(e, circles);
   };
 
