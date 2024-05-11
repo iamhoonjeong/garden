@@ -102,7 +102,7 @@ export const addCircle = async (e: MouseEvent | TouchEvent, circles: Circle[]) =
   }
 };
 
-export const catchBallsIfYouCanAnimation = async (
+export const catchBallsAnimation = async (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   video: HTMLVideoElement,
@@ -255,9 +255,9 @@ export const catchBallsIfYouCanAnimation = async (
   }
 
   const animationId = requestAnimationFrame(() =>
-    catchBallsIfYouCanAnimation(canvas, context, video, detector, circles),
+    catchBallsAnimation(canvas, context, video, detector, circles),
   );
-  if (window.location.pathname !== '/catch-balls-if-you-can') {
+  if (window.location.pathname !== '/catch-balls') {
     cancelAnimationFrame(animationId);
     detector.dispose();
   }
@@ -381,7 +381,7 @@ export const drawingWithHandAnimation = async (
   }
 };
 
-export const shakingRainbowsAnimation = async (
+export const shakingRainbowAnimation = async (
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,
   video: HTMLVideoElement,
@@ -538,9 +538,9 @@ export const shakingRainbowsAnimation = async (
   }
 
   const animationId = requestAnimationFrame(() =>
-    shakingRainbowsAnimation(canvas, context, video, detector, circles, allowClick),
+    shakingRainbowAnimation(canvas, context, video, detector, circles, allowClick),
   );
-  if (window.location.pathname !== '/shaking-rainbows') {
+  if (window.location.pathname !== '/shaking-rainbow') {
     cancelAnimationFrame(animationId);
     detector.dispose();
   }

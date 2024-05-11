@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { HandDetector } from '@tensorflow-models/hand-pose-detection';
-import { canvasSizeAdjustment, catchBallsIfYouCanAnimation } from '@/lib/canvas';
+import { canvasSizeAdjustment, catchBallsAnimation } from '@/lib/canvas';
 import { createTensorflowDetector } from '@/lib/tensorflow';
 import { Circle } from '@/types/canvas';
 
@@ -80,7 +80,7 @@ export default function Hand() {
     };
 
     videoPlay(video, videoConstraints);
-    catchBallsIfYouCanAnimation(canvas, context, video, detector, circles);
+    catchBallsAnimation(canvas, context, video, detector, circles);
   }, [detector]);
 
   const videoPlay = (video: HTMLVideoElement, constraints: MediaStreamConstraints) => {

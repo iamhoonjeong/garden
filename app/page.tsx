@@ -99,12 +99,12 @@ export default function Home() {
         </div>
       </div>
       <div className="icons">
-        <Link href="https://www.linkedin.com/in/iamhoonjeong" target="_blank">
+        <Link href="https://bit.ly/linkedin-iamhoonjeong" target="_blank">
           <Image src={`/images/linkedin-icon.svg`} alt={'linkedin icon'} width="24" height="24" />
         </Link>
       </div>
       <div className="demonstration">
-        <Link href="https://youtu.be/-tW5h_1O_H8" target="_blank">
+        <Link href="https://bit.ly/garden-demonstration-video-2" target="_blank">
           <div>Demonstration Video</div>
         </Link>
       </div>

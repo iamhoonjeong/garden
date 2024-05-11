@@ -23,7 +23,7 @@ export default function Navigation() {
               <Link href="/drawing-with-hand">Drawing with Hand</Link>
             </li> */}
             <li>
-              <Link href="/shaking-rainbows">Shaking Rainbows</Link>
+              <Link href="/shaking-rainbow">Shaking Rainbow</Link>
               <Image
                 className="arrow-icon"
                 src={`/images/arrow.svg`}
@@ -43,7 +43,7 @@ export default function Navigation() {
               />
             </li>
             <li>
-              <Link href="/catch-balls-if-you-can">Catch balls if you can</Link>
+              <Link href="/catch-balls">Catch balls</Link>
               <Image
                 className="arrow-icon"
                 src={`/images/arrow.svg`}

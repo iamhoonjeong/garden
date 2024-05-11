@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { HandDetector } from '@tensorflow-models/hand-pose-detection';
-import { canvasSizeAdjustment, shakingRainbowsAnimation } from '@/lib/canvas';
+import { canvasSizeAdjustment, shakingRainbowAnimation } from '@/lib/canvas';
 import { createTensorflowDetector } from '@/lib/tensorflow';
 
 export default function Hand() {
@@ -44,7 +44,7 @@ export default function Hand() {
     };
 
     videoPlay(video, videoConstraints);
-    shakingRainbowsAnimation(canvas, context, video, detector, circles, allowClick);
+    shakingRainbowAnimation(canvas, context, video, detector, circles, allowClick);
   }, [detector]);
 
   const videoPlay = (video: HTMLVideoElement, constraints: MediaStreamConstraints) => {
