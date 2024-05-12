@@ -1,7 +1,8 @@
 'use client';
+import '@/styles/navigation.css';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -25,9 +26,9 @@ export default function Navigation() {
             <li>
               <Link href="/shaking-rainbow">Shaking Rainbow</Link>
               <Image
-                className="arrow-icon"
-                src={`/images/arrow.svg`}
-                alt={'arrow icon'}
+                className="icon-arow"
+                src={`/images/icon-arrow.svg`}
+                alt={'Arrow icon'}
                 width="20"
                 height="20"
               />
@@ -35,9 +36,9 @@ export default function Navigation() {
             <li>
               <Link href="/bubble-bubble">Bubble Bubble</Link>
               <Image
-                className="arrow-icon"
-                src={`/images/arrow.svg`}
-                alt={'arrow icon'}
+                className="icon-arow"
+                src={`/images/icon-arrow.svg`}
+                alt={'Arrow icon'}
                 width="20"
                 height="20"
               />
@@ -45,9 +46,9 @@ export default function Navigation() {
             <li>
               <Link href="/catch-balls">Catch balls</Link>
               <Image
-                className="arrow-icon"
-                src={`/images/arrow.svg`}
-                alt={'arrow icon'}
+                className="icon-arow"
+                src={`/images/icon-arrow.svg`}
+                alt={'Arrow icon'}
                 width="20"
                 height="20"
               />

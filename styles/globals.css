@@ -3,6 +3,7 @@
   padding: 0;
   border: 0;
   line-height: 0;
+
   text-decoration: none;
   color: black;
 }
@@ -11,212 +12,15 @@ html,
 body {
   width: 100%;
   height: 100%;
+
   overflow: hidden;
 }
 
-.hand-image-container {
-  display: flex;
-  flex-direction: column;
-  background: none;
-  position: fixed;
-  top: 0;
-  pointer-events: none;
-
-  p {
-    font-weight: 400;
-    padding-left: 8px;
-    line-height: 24px;
-
-    span {
-      font-weight: 600;
-      font-size: 20px;
-    }
-  }
-}
-
-.left-hand-container {
-  margin-top: 200px;
-  padding-left: 8px;
-  display: flex;
-}
-
-.right-hand-container {
-  margin-top: 60px;
-  padding-left: 10px;
-  display: flex;
-}
-
-.right-hand {
-  transform: scaleX(-1);
-}
-
-.navigation {
-  position: fixed;
-  top: 12px;
-  left: 0;
-}
-
-.navigation > ul {
-  display: flex;
-  flex-direction: column;
-  padding-left: 20px;
-}
-
-.navigation > ul > li {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  list-style-type: none;
-  font-size: 20px;
-}
-
 .not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  width: 100%;
-  height: 100%;
-}
-
-.construction {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3vw;
-  pointer-events: none;
-}
-
-.construction > div {
-  display: inline-block;
-}
-
-/* Pinch circles style start */
-.pinch-stop-watch {
-  position: fixed;
-  left: 50%;
-  width: 240px;
-  height: 40px;
-  transform: translateX(-120px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.pinch-stop-watch > span.pinch-stop-watch-milliseconds {
-  width: 20px;
-  margin: 0;
-}
-
-.pinch-score {
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  width: 240px;
-  height: 40px;
-  transform: translateX(-120px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/* Pinch circles style end */
-
-.arrow-icon {
-  margin-left: 8px;
-  animation-name: animate;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-}
-
-.arrow-icon2 {
-  margin-left: 8px;
-  animation-name: animate;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  transform: scaleX(-1);
-}
-
-@keyframes animate {
-  from {
-    margin-left: 24px;
-  }
-  to {
-    margin-left: 8px;
-  }
-}
-
-.demonstration {
-  animation-name: opacity;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  display: flex;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  a {
-    display: flex;
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-    height: 24px;
-  }
-}
-
-@keyframes opacity {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.icons {
-  display: flex;
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-
-  a {
-    display: flex;
-  }
-}
-
-.icons-2 {
-  display: flex;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  a {
-    display: flex;
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-    height: 24px;
-  }
-}
-
-.resume {
-  position: fixed;
-  top: 12px;
-  right: 20px;
-  font-size: 20px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
 }

@@ -1,0 +1,13 @@
+.reset-balls {
+  position: fixed;
+  top: 12px;
+  right: 20px;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 20px;
+  height: 40px;
+
+  cursor: pointer;
+}

@@ -1,4 +1,5 @@
 'use client';
+import '@/styles/catch-balls.css';
 import { useEffect, useRef, useState } from 'react';
 import { HandDetector } from '@tensorflow-models/hand-pose-detection';
 import { canvasSizeAdjustment, catchBallsAnimation } from '@/lib/canvas';
@@ -95,7 +96,7 @@ export default function Hand() {
       .catch((error) => console.error(error));
   };
 
-  const onResumeBalls = () => {
+  const onResetBalls = () => {
     circles.splice(0, circles.length);
 
     if (window.innerWidth < 600) {
@@ -134,7 +135,7 @@ export default function Hand() {
   return (
     <main className="container">
       <div className="pinch-stop-watch"></div>
-      <div className="resume" onClick={onResumeBalls}>
+      <div className="reset-balls" onClick={onResetBalls}>
         Reset Balls
       </div>
       <canvas ref={canvasRef}></canvas>

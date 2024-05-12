@@ -1,7 +1,8 @@
 'use client';
+import '@/styles/home.css';
 import { useRef, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 import { canvasSizeAdjustment, canvasAnimation, drawingCircles, addCircle } from '@/lib/canvas';
 import { Circle } from '@/types/canvas';
 
@@ -68,12 +69,12 @@ export default function Home() {
 
   return (
     <main className="container">
-      <div className="hand-image-container">
+      <div className="hands-container">
         <div className="left-hand-container">
           <Image
             className="left-hand"
-            src={`/images/hand.svg`}
-            alt={'left-hand image'}
+            src={`/images/icon-hand.svg`}
+            alt={'Left hand icon'}
             width="80"
             height="80"
           />
@@ -86,8 +87,8 @@ export default function Home() {
         <div className="right-hand-container">
           <Image
             className="right-hand"
-            src={`/images/hand.svg`}
-            alt={'right-hand image'}
+            src={`/images/icon-hand.svg`}
+            alt={'Right hand icon'}
             width="80"
             height="80"
           />
@@ -98,12 +99,12 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div className="icons">
+      <div className="social-icons">
         <Link href="https://bit.ly/linkedin-iamhoonjeong" target="_blank">
-          <Image src={`/images/linkedin-icon.svg`} alt={'linkedin icon'} width="24" height="24" />
+          <Image src={`/images/icon-linkedIn.svg`} alt={'linkedin icon'} width="24" height="24" />
         </Link>
       </div>
-      <div className="demonstration">
+      <div className="demonstration-video-link">
         <Link href="https://bit.ly/garden-demonstration-video-2" target="_blank">
           <div>Demonstration Video</div>
         </Link>
