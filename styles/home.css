@@ -32,16 +32,12 @@
   bottom: 20px;
   right: 20px;
 
-  display: flex;
-
   animation-name: opacity-changes;
   animation-duration: 2s;
   animation-iteration-count: infinite;
 
   div {
-    display: flex;
-    align-items: center;
-    height: 24px;
+    line-height: normal;
   }
 }
 
